@@ -55,7 +55,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
       image=null;
     });
   }
-
   saveServiceTofirebase()async{
     firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
         .ref('gs://flutter-topcare.appspot.com/ServiceImages/$fileName');
@@ -94,7 +93,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
     }
   }
   @override
-    Widget _dropDownButton() {
+  Widget _dropDownButton() {
     return DropdownButton<String>(
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
@@ -277,6 +276,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
               ],
             ),
             Divider(thickness: 5,color: Colors.blue),
+            SizedBox(height: 10),
             Text("All Services :", style: TextStyle(color: Colors.blue, fontSize: 20),),
             ServiceList(),
 

@@ -168,6 +168,7 @@ clean(){
             ),
           ),
             Divider(thickness: 3,color: Colors.blue,),
+            SizedBox(height: 10),
             Text("All Categories :", style: TextStyle(color: Colors.blue, fontSize: 20),),
             CategoryList(),
           ],
