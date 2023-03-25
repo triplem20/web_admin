@@ -32,9 +32,9 @@ class _ServiceListState extends State<ServiceList> {
 
 
     @override
-    Widget _dropDownButton() {
+    Widget _dropDownButton(String? val) {
       return DropdownButton<String>(
-        value: dropdownValue,
+        value: val,
         icon: const Icon(Icons.arrow_downward),
         hint: Text('Select Category'),
         onChanged: (String? newValue) {
@@ -196,7 +196,8 @@ class _ServiceListState extends State<ServiceList> {
                                                   querySnapshot == null
                                                       ? CircularProgressIndicator(
                                                       color: Colors.blue)
-                                                      : _dropDownButton(),
+                                                      : _dropDownButton(
+                                                      snapshot.data!.docs[index]["category"]),
                                                   Row(
                                                     crossAxisAlignment:
                                                     CrossAxisAlignment
@@ -225,15 +226,14 @@ class _ServiceListState extends State<ServiceList> {
                                                               onTap: () {
                                                                 pickImage();
                                                               },
-                                                              child: image ==
-                                                                  null
-                                                                  ? Center(
-                                                                  child: Icon(Icons
-                                                                      .file_upload))
-                                                                  : Image.memory(
-                                                                  image,
-                                                                  fit: BoxFit
-                                                                      .cover))),
+                                                              child: Container(
+                                                                height: 100,
+                                                                width: 100,
+                                                                decoration: BoxDecoration(
+                                                                  image: DecorationImage(image: NetworkImage(snapshot.data!.docs[index]['image'])),
+                                                                  borderRadius: BorderRadius.circular(20),
+                                                                ),
+                                                              ))),
                                                       SizedBox(width: 10),
                                                       Padding(
                                                         padding:

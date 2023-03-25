@@ -163,8 +163,16 @@ class _CategoryListState extends State<CategoryList> {
                                                                     onTap: (){
                                                                       pickImage();
                                                                     },
-                                                                    child: image == null ? Center(child: Icon(Icons.file_upload)):Image.memory(image, fit:BoxFit.cover))),
-                                                            SizedBox(width:10),
+                                                                    child:  Container(
+                                                                        height: 100,
+                                                                        width: 100,
+                                                                        decoration: BoxDecoration(
+                                                                          image: DecorationImage(image: NetworkImage(snapshot.data!.docs[index]['image'])),
+                                                                          borderRadius: BorderRadius.circular(20),
+                                                                        ),
+                                                                    )
+                                                                ),
+                                                            ),
                                                             Column(
                                                               children: [
                                                                 Padding(
