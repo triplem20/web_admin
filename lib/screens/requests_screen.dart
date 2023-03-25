@@ -129,7 +129,7 @@ class RequestsScreen extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         TextButton(onPressed: () {
-                                          _showAlertDialog(context, " Accept Request  ", "Are You Sure ?",_services.Requests.doc().id,_services.toString());
+                                          _showAlertDialog(context, " Accept Request  ", "Are You Sure ?",_services.Requests.doc().id,'');
                                         },
                                           child: Text("Accept",
                                               style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),

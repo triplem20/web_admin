@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../services/firebase_services.dart';
-import 'edit_button.dart';
+import 'update_form.dart';
 
 class CategoryList extends StatefulWidget {
   const CategoryList({Key? key}) : super(key: key);
@@ -21,7 +21,9 @@ class _CategoryListState extends State<CategoryList> {
 
 
     deleteCategory(id)async{
+
       _services.category.doc(id).delete();
+      EasyLoading.showSuccess("Category Deleted");
 
     }
     _showAlertDialog(context,title, message, id)async {
@@ -96,14 +98,6 @@ class _CategoryListState extends State<CategoryList> {
                   backgroundColor: Colors.transparent,
                   child: IconButton(onPressed: () {
 
-
-
-
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_){
-                        return UpdateButton(catId: _services.category.id);
-                      }),
-                    );
 
                   },
                     icon: Icon(Icons.edit),),

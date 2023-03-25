@@ -47,7 +47,7 @@ clean(){
   saveImageTofirebase()async{
   firebase_storage.Reference ref =firebase_storage.FirebaseStorage.instance
       .ref('gs://flutter-topcare.appspot.com/CategoryImages/$fileName');
-  EasyLoading.show(status: "Loading..");
+  EasyLoading.show(status: "Saving..");
    try {
      await ref.putData(image);
      final imageUrl = await ref.getDownloadURL().then((value) =>

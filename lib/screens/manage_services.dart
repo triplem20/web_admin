@@ -221,6 +221,9 @@ class _ServiceScreenState extends State<ServiceScreen> {
 
                           controller: _price,
                           keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            double.parse(value);
+                          },
 
                           validator: (value){
                             if(value!.isEmpty){
@@ -248,7 +251,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 TextButton(onPressed: (){
                   if(dropdownValue != null){
                     if(_formkey.currentState!.validate()){
-                      EasyLoading.show(status: 'Loading..');
+                      EasyLoading.show(status: 'Saving..');
                       saveServiceTofirebase();
 
 

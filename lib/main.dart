@@ -8,7 +8,7 @@ import 'screens/manage_categories.dart';
 import 'screens/manage_services.dart';
 import 'screens/requests_screen.dart';
 import 'screens/home_screen.dart';
-import 'widgets/edit_button.dart';
+import 'widgets/update_form.dart';
 import 'screens/login_screen.dart';
 import 'screens/users_screen.dart';
 
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         RequestsScreen.id:(context) =>RequestsScreen(),
         CategoryScreen.id:(context) =>CategoryScreen(),
         ServiceScreen.id:(context) =>ServiceScreen(),
-        UpdateButton.id:(context) =>UpdateButton(catId: _services.category.id),
+        UpdateForm.id:(context) =>UpdateForm(),
         UsersScreen.id:(context) => UsersScreen(),
 
       },

@@ -35,7 +35,6 @@ class _UpdateWidgetState extends State<UpdateWidget> {
     return Column(
       children: [
 
-
         TextFormField(
           controller: titleController,
           validator: (value){
@@ -51,8 +50,6 @@ class _UpdateWidgetState extends State<UpdateWidget> {
         ),
         ElevatedButton(onPressed: (){
           var collection= FirebaseFirestore.instance.collection("categories");
-
-
               collection
               .doc(widget.cat)
               .update({
