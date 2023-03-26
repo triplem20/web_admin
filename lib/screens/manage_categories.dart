@@ -141,10 +141,6 @@ clean(){
                           if(_formkey.currentState!.validate()){
                             EasyLoading.show(status: 'Loading..');
                             saveImageTofirebase();
-
-
-
-
                           }
                         },
                           child: Text("Save",

@@ -57,6 +57,7 @@ class RequestsScreen extends StatelessWidget {
                 width: 100,
                 child: Text('Service ID'),
               ),
+
               Container(
                 width: 100,
                 child: Text('Date'),
@@ -118,6 +119,7 @@ class RequestsScreen extends StatelessWidget {
                                             width: 120,
                                             child: Text(snapshot.data!.docs[index]['productId']),
                                           ),
+
                                           Container(
                                             width: 120,
                                             child: Text(snapshot.data!.docs[index]['date']),
@@ -125,11 +127,12 @@ class RequestsScreen extends StatelessWidget {
 
 
 
+
                                   Container(
                                     child: Row(
                                       children: [
                                         TextButton(onPressed: () {
-                                          _showAlertDialog(context, " Accept Request  ", "Are You Sure ?",_services.Requests.doc().id,'');
+                                          _showAlertDialog(context, " Accept Request  ", "Are You Sure ?",_services.Requests.doc().id,"");
                                         },
                                           child: Text("Accept",
                                               style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
@@ -177,6 +180,7 @@ class RequestsScreen extends StatelessWidget {
       content: Text(message),
       actions: [
         TextButton(onPressed: (){
+          Navigator.of(context).pop();
 
         }, child: Text("Cancel")),
         TextButton(onPressed: (){
