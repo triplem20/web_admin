@@ -46,11 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _selectedScreen =DashScreen();
       });
-      break;
-      case CategoryScreen.id:
-        setState(() {
-          _selectedScreen = CategoryScreen();
-        });
         break;
       case ServiceScreen.id:
         setState(() {
@@ -91,11 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
             route: DashScreen.id,
             icon: Icons.dashboard,
           ),
-          AdminMenuItem(
-            title: 'Categories',
-            route: CategoryScreen.id,
-            icon: Icons.category,
-          ),
+
           AdminMenuItem(
             title: 'Services',
             route: ServiceScreen.id,

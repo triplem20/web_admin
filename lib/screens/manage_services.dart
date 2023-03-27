@@ -69,6 +69,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
         setState(() {
           dropdownValue = newValue!;
 
+
         });
       },
       items: querySnapshot!.docs.map((e) {
@@ -117,7 +118,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                SizedBox(width:10),
 
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +141,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Container(
                         width: 200,
                         height:100,
@@ -162,7 +163,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Container(
                         width: 200,
                         height: 100,
@@ -182,12 +183,12 @@ class _ServiceScreenState extends State<ServiceScreen> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            label: Text("Enter Service Price"),
+                            label: Text("Enter Service Price SDG "),
                             contentPadding:EdgeInsets.zero,
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Container(
                         width: 200,
                         height: 100,

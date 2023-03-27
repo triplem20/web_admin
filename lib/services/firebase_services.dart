@@ -8,12 +8,9 @@ class FirebaseServices {
   firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage
       .instance;
   CollectionReference users = FirebaseFirestore.instance.collection("users");
-  CollectionReference Requests = FirebaseFirestore.instance.collection(
-      "Requests");
-  CollectionReference services = FirebaseFirestore.instance.collection(
-      "services");
-  CollectionReference category = FirebaseFirestore.instance.collection(
-      "categories");
+  CollectionReference Requests = FirebaseFirestore.instance.collection("Requests");
+  CollectionReference services = FirebaseFirestore.instance.collection("services");
+  CollectionReference category = FirebaseFirestore.instance.collection("categories");
 
 
   Future<void> SaveCategory({CollectionReference? reference, Map<String,
@@ -23,15 +20,10 @@ class FirebaseServices {
 
   Future<void> UpdateOrderStatus(documentId, status) {
     var result = Requests.doc(documentId).update({
-      'status': status
+      'request status': status
     });
     return result;
   }
 
-  Future<void> UpdateCategory({CollectionReference? reference, Map<String,
-      dynamic>? data, String? docName }) {
-    return reference!.doc().update({
 
-    });
-  }
 }

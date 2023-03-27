@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/services.dart';
-import 'update_form.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+
 
 import '../services/firebase_services.dart';
 
@@ -38,7 +38,8 @@ class _ServiceListState extends State<ServiceList> {
       onChanged: (String? newValue) {
         // This is called when the user selects an item.
         setState(() {
-          dropdownValue = newValue!;
+          val = newValue!;
+
         });
       },
       items: querySnapshot!.docs.map((e) {
@@ -58,6 +59,12 @@ class _ServiceListState extends State<ServiceList> {
     });
   }
 
+  @override
+  void initState() {
+    getCategoryList();
+    // TODO: implement initState
+    super.initState();
+  }
   deleteCategory(id) async {
     _services.services.doc(id).delete();
     EasyLoading.showSuccess("Service Deleted");
@@ -88,14 +95,6 @@ class _ServiceListState extends State<ServiceList> {
       ),
     );
   }
-
-  @override
-  void initState() {
-    getCategoryList();
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -154,6 +153,8 @@ class _ServiceListState extends State<ServiceList> {
                                       snapshot.data!.docs[index]['Description'];
                                   priceController.text =
                                       snapshot.data!.docs[index]['Price'];
+                                  imageUrlController.text =
+                                  snapshot.data!.docs[index]['image'];
 
 
                                   showDialog(
@@ -182,7 +183,7 @@ class _ServiceListState extends State<ServiceList> {
                                                               ? CircularProgressIndicator(
                                                                   color: Colors
                                                                       .blue)
-                                                              : _dropDownButton(snapshot.data!.docs[index]["category"]),
+                                                              : _dropDownButton(snapshot.data!.docs[index]['category']),
                                                           Row(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             mainAxisAlignment: MainAxisAlignment.start,
@@ -255,7 +256,7 @@ class _ServiceListState extends State<ServiceList> {
                                                                               value);
                                                                         },
                                                                         decoration: InputDecoration(
-                                                                          label: Text(" Service Price"),
+                                                                          label: Text(" Service Price SDG"),
                                                                           contentPadding: EdgeInsets.zero,
                                                                         ),
                                                                       ),
@@ -289,44 +290,52 @@ class _ServiceListState extends State<ServiceList> {
                                                             children: [
                                                               TextButton(
                                                                 onPressed: () {
-                                                                  if (dropdownValue != null) {
-                                                                    if (_formkey.currentState!.validate()) {
-                                                                      EasyLoading.show(status: 'Updating..');
-                                                                      snapshot.data!.docs[index]
-                                                                          .reference
-                                                                          .update({
-                                                                        'title': nameController.text,
-                                                                        'Description': infoController.text,
-                                                                        'Price': priceController.text,
-                                                                        'image': imageUrlController,
-                                                                      }).then((value) {
-                                                                        Navigator.of(context).pop();
-                                                                      });
-                                                                    }
-                                                                  }
-                                                                },
-                                                                child: Text(
-                                                                    "Update",
+
+                                                                 if (_formkey
+                                                                     .currentState!
+                                                                     .validate()) {
+                                                                   snapshot
+                                                                       .data!
+                                                                       .docs[index]
+                                                                       .reference
+                                                                       .update({
+
+                                                                     'title': nameController.text,
+                                                                     'category': dropdownValue,
+                                                                     'Description': infoController.text,
+                                                                     'Price': priceController.text,
+
+
+                                                                   })
+                                                                       .then((
+                                                                       value) {
+                                                                     Navigator
+                                                                         .of(
+                                                                         context)
+                                                                         .pop();
+                                                                     EasyLoading
+                                                                         .showSuccess(
+                                                                         "Category Updated");
+                                                                   });
+                                                                 }
+
+                                                                    EasyLoading.show(status: 'Updating..');
+
+                                                                   },
+                                                                child: Text("Update",
                                                                     style: TextStyle(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold)),
+                                                                        color: Colors.white,
+                                                                        fontWeight: FontWeight.bold)),
                                                                 style: ButtonStyle(
                                                                   backgroundColor:
-                                                                      MaterialStatePropertyAll(
-                                                                          Colors
-                                                                              .blue),
+                                                                      MaterialStatePropertyAll(Colors.blue),
                                                                 ),
                                                               ),
                                                               const SizedBox(
                                                                   width: 5),
                                                               TextButton(
                                                                   onPressed: () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
+                                                                    Navigator.of(context).pop();
                                                                   },
                                                                   child: Text(
                                                                       "Cancel",

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../services/firebase_services.dart';
-import 'update_form.dart';
+
 
 class CategoryList extends StatefulWidget {
   const CategoryList({Key? key}) : super(key: key);
@@ -198,9 +198,10 @@ class _CategoryListState extends State<CategoryList> {
                                                                 ),
                                                                 Row(
                                                                   children: [
-                                                                    image== null? Container():
+
                                                                     TextButton(onPressed: (){
                                                                       if(_formkey.currentState!.validate()){
+
                                                                         snapshot.data!.docs[index]
                                                                             .reference
                                                                             .update({
@@ -208,8 +209,13 @@ class _CategoryListState extends State<CategoryList> {
 
                                                                         }).then((value) {
                                                                           Navigator.of(context).pop();
+                                                                          EasyLoading.showSuccess("Category Updated");
+
                                                                         });
                                                                       }
+                                                                      EasyLoading.show(status: 'Updating..');
+
+
                                                                     },
                                                                       child: Text(" Update",
                                                                           style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),

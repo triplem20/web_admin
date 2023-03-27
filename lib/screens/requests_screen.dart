@@ -11,6 +11,8 @@ class RequestsScreen extends StatelessWidget {
   static const String id ="Requests-Screen";
   FirebaseServices _services = FirebaseServices();
 
+  TextEditingController statusController =TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class RequestsScreen extends StatelessWidget {
               ),
               Container(
                 width: 100,
-                child: Text('Service ID'),
+                child: Text('Status'),
               ),
 
               Container(
@@ -117,7 +119,7 @@ class RequestsScreen extends StatelessWidget {
                                           ),
                                           Container(
                                             width: 120,
-                                            child: Text(snapshot.data!.docs[index]['productId']),
+                                            child: Text(snapshot.data!.docs[index]['request status']),
                                           ),
 
                                           Container(
@@ -128,27 +130,123 @@ class RequestsScreen extends StatelessWidget {
 
 
 
+
                                   Container(
-                                    child: Row(
+                                    child:
+                                    snapshot.data!.docs[index]['request status']== 'Accepted'?
+                                    Container(
+                                        width: 120,
+                                        child:Text("Order Accepted")
+                                    ) :Row(
                                       children: [
                                         TextButton(onPressed: () {
-                                          _showAlertDialog(context, " Accept Request  ", "Are You Sure ?",_services.Requests.doc().id,"");
-                                        },
+                                            showCupertinoDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (BuildContext context) => AlertDialog(
+                                                  title: Center(
+                                                    child: Text("Accept Request"),),
+                                                  content:Center(child: Text("Are You Sure?")),
+                                                  actions: [
+                                                    TextButton(onPressed: (){
+                                                      Navigator.of(context).pop();
+
+                                                    }, child: Text("Cancel")),
+                                                    TextButton(onPressed: (){
+                                                      snapshot
+                                                          .data!
+                                                          .docs[index]
+                                                          .reference
+                                                          .update({
+
+                                                        'request status': "Accepted",
+
+
+                                                      })
+                                                          .then((
+                                                          value) {
+                                                        Navigator
+                                                            .of(
+                                                            context)
+                                                            .pop();
+                                                        EasyLoading
+                                                            .showSuccess(
+                                                            "Request Accepted");
+                                                      });
+
+
+
+                                                    },
+                                                        child: Text("Ok")),
+                                                  ],
+                                                )
+                                            );
+                                  },
                                           child: Text("Accept",
                                               style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
                                           style: ButtonStyle(
                                             backgroundColor: MaterialStatePropertyAll(Colors.green),
                                           ),),
-                                        const SizedBox(width: 4),
-                                        TextButton(onPressed: (){
-                                          _showAlertDialog(context, "Reject Request", "Are You Sure ?",_services.Requests.doc().id,'');
-                                        }, child: Text("Reject",
-                                            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
-                                            style: ButtonStyle(
-                                              backgroundColor: MaterialStatePropertyAll(Colors.red),)),
+                                        SizedBox(width: 6),
+                                        AbsorbPointer(
+                                          absorbing:  snapshot.data!.docs[index]['request status']== 'Rejected'
+                                              ?true
+                                          :false,
+                                          child: TextButton(onPressed: (){
+                                            showCupertinoDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (BuildContext context) => AlertDialog(
+                                                  title: Center(
+                                                    child: Text("Reject Request"),),
+                                                  content:Center(child: Text("Are You Sure?")),
+                                                  actions: [
+                                                    TextButton(onPressed: (){
+                                                      Navigator.of(context).pop();
+
+                                                    }, child: Text("Cancel")),
+                                                    TextButton(onPressed: (){
+                                                      snapshot
+                                                          .data!
+                                                          .docs[index]
+                                                          .reference
+                                                          .update({
+
+                                                        'request status': "Rejected",
+
+
+                                                      })
+                                                          .then((
+                                                          value) {
+                                                        Navigator
+                                                            .of(
+                                                            context)
+                                                            .pop();
+                                                        EasyLoading
+                                                            .showSuccess(
+                                                            "Request Rejected");
+                                                      });
+
+
+
+                                                    },
+                                                        child: Text("Ok")),
+                                                  ],
+                                                )
+                                            );
+
+
+
+                                          }, child: Text("Reject",
+                                              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+                                              style: ButtonStyle(
+                                                backgroundColor: MaterialStatePropertyAll( snapshot.data!.docs[index]['request status']== 'Rejected'
+                                                    ?Colors.grey :Colors.red),)),
+                                        ),
                                       ],
                                     ),
-                                  ),
+
+                                  ) ,
               ]),
                               Divider(thickness: 3,color:Colors.grey),
                             ],
@@ -170,33 +268,5 @@ class RequestsScreen extends StatelessWidget {
         );
 
   }
-  _showAlertDialog(context,title, message,status,documentId){
-    showCupertinoDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => AlertDialog(
-      title: Center(
-        child: Text(title),),
-      content: Text(message),
-      actions: [
-        TextButton(onPressed: (){
-          Navigator.of(context).pop();
 
-        }, child: Text("Cancel")),
-        TextButton(onPressed: (){
-          EasyLoading.show(status: "Confirming");
-         status== "Accepted" ?_services.UpdateOrderStatus(documentId,status).then((value) {
-            EasyLoading.showSuccess("Request Accepted");
-          }):_services.UpdateOrderStatus(documentId,status).then((value) {
-           EasyLoading.showSuccess("Request Accepted");
-         });
-          Navigator.of(context).pop();
-
-        }, child: Text("Confirm")),
-
-
-      ],
-    )
-    );
-  }
 }
