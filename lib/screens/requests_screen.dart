@@ -23,8 +23,8 @@ class RequestsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child:Column(
         children: [
-          Text("Requests",style: TextStyle(color: Colors.blue, fontSize: 30),),
-        const SizedBox(height: 15),
+          Text("Requests",style: TextStyle(color: Colors.green, fontSize: 30),),
+        const SizedBox(height: 20),
 
         Container(height: 60,
           decoration: BoxDecoration(
@@ -135,8 +135,16 @@ class RequestsScreen extends StatelessWidget {
                                     child:
                                     snapshot.data!.docs[index]['request status']== 'Accepted'?
                                     Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+
                                         width: 120,
-                                        child:Text("Order Accepted")
+                                        child:Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Text("Order Accepted"),
+                                        )
                                     ) :Row(
                                       children: [
                                         TextButton(onPressed: () {
@@ -146,7 +154,7 @@ class RequestsScreen extends StatelessWidget {
                                                 builder: (BuildContext context) => AlertDialog(
                                                   title: Center(
                                                     child: Text("Accept Request"),),
-                                                  content:Center(child: Text("Are You Sure?")),
+                                                  content: Text("Are You Sure?"),
                                                   actions: [
                                                     TextButton(onPressed: (){
                                                       Navigator.of(context).pop();
@@ -199,7 +207,7 @@ class RequestsScreen extends StatelessWidget {
                                                 builder: (BuildContext context) => AlertDialog(
                                                   title: Center(
                                                     child: Text("Reject Request"),),
-                                                  content:Center(child: Text("Are You Sure?")),
+                                                  content:Text("Are You Sure?"),
                                                   actions: [
                                                     TextButton(onPressed: (){
                                                       Navigator.of(context).pop();
@@ -226,9 +234,6 @@ class RequestsScreen extends StatelessWidget {
                                                             .showSuccess(
                                                             "Request Rejected");
                                                       });
-
-
-
                                                     },
                                                         child: Text("Ok")),
                                                   ],

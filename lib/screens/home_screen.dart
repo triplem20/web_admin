@@ -69,17 +69,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return AdminScaffold(
       backgroundColor: Colors.white,
+
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: const Text('Top Care'),
         actions: [
           IconButton(onPressed: (){
             _showAlertDialog(context, "Log Out ", "Are You Sure ?");
-
-
           }, icon: Icon(Icons.logout)),
         ],
       ),
       sideBar: SideBar(
+        textStyle: TextStyle(color: Colors.green),
+        iconColor: Colors.green,
+        activeIconColor: Colors.lightGreenAccent,
         items: const [
           AdminMenuItem(
             title: 'Dashboard',

@@ -18,8 +18,8 @@ class UsersScreen extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child:Column(
         children: [
-          Text("Customer Details",style: TextStyle(color: Colors.blue, fontSize: 30),),
-          const SizedBox(height: 15),
+          Text("Customer Details",style: TextStyle(color: Colors.green, fontSize: 30),),
+          const SizedBox(height: 20),
           Container(height: 60,
             decoration: BoxDecoration(
               color: Colors.black12,

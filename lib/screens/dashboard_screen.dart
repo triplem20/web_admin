@@ -12,39 +12,44 @@ class DashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Widget analatyicalWidget({required String title, String? value} ){
-      return   Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          height: 100,
-          width: 200,
-          decoration: BoxDecoration(
-            color: Colors.blueAccent,
-            border: Border.all(width:5,color: Colors.blueGrey),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(title,style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(value!),
-                    Icon(Icons.show_chart),
-                  ],
-                )
-              ],
+      return   Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            height: 110,
+            width: 120,
+            decoration: BoxDecoration(
+              color: Colors.indigo,
+              border: Border.all(width:3,color: Colors.indigoAccent),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(title,style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(value!,style: TextStyle(fontSize: 20,color: Colors.white,  fontWeight: FontWeight.bold),),
+                      Icon(Icons.show_chart,color: Colors.white),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
       );
     }
-    return Row(
+    return
+      Column(
+        children: [
+      Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(width:10),
@@ -87,7 +92,10 @@ class DashScreen extends StatelessWidget {
 
           },
         ),
-        Column(
+        ]
+    ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             StreamBuilder<QuerySnapshot>(
               stream: _services.services.snapshots(),
@@ -107,6 +115,7 @@ class DashScreen extends StatelessWidget {
                 return SizedBox();
               },
             ),
+            const SizedBox(width:10),
 
         StreamBuilder<QuerySnapshot>(
           stream: _services.category.snapshots(),
@@ -128,7 +137,7 @@ class DashScreen extends StatelessWidget {
         ),
           ],
     ),
-      ],
+    ]
     );
   }
 }
