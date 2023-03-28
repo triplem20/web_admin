@@ -24,8 +24,8 @@ class _SplashScreenState extends State<SplashScreen>{
       backgroundColor: Colors.black,
       body: Center(
         child:  Container(
-      height: 250,
-      width: 250,
+      height: 200,
+      width: 200,
       decoration: BoxDecoration(
         image: DecorationImage(image: AssetImage('assets/images/logo1.jpg')),
         borderRadius: BorderRadius.circular(20),

@@ -33,10 +33,10 @@ class _ServiceListState extends State<ServiceList> {
   Widget _dropDownButton(String? val) {
     return DropdownButton<String>(
       value: val,
-      icon: const Icon(Icons.arrow_downward),
+      icon: const Icon(Icons.arrow_downward,color: Colors.greenAccent,),
       hint: Text('Select Category'),
       onChanged: (String? newValue) {
-        // This is called when the user selects an item.
+        // This is called when the user selects an item
         setState(() {
           val = newValue!;
 
@@ -44,8 +44,8 @@ class _ServiceListState extends State<ServiceList> {
       },
       items: querySnapshot!.docs.map((e) {
         return DropdownMenuItem<String>(
-          value: e['catname'],
-          child: Text(e["catname"]),
+          value: e['name'],
+          child: Text(e["name"]),
         );
       }).toList(),
     );
@@ -81,16 +81,18 @@ class _ServiceListState extends State<ServiceList> {
         content: Text(message),
         actions: <Widget>[
           TextButton(
+            style: ButtonStyle( backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel")),
+              child: Text("Cancel",style: TextStyle(color: Colors.white),)),
           TextButton(
+              style: ButtonStyle( backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
               onPressed: () {
                 deleteCategory(id);
                 Navigator.of(context).pop();
               },
-              child: Text("Delete")),
+              child: Text("Delete",style: TextStyle(color: Colors.white),)),
         ],
       ),
     );
@@ -106,7 +108,7 @@ class _ServiceListState extends State<ServiceList> {
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color:Colors.greenAccent),
             );
           }
 
@@ -145,6 +147,7 @@ class _ServiceListState extends State<ServiceList> {
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
                             child: IconButton(
+                              color: Colors.green,
                                 icon: Icon(Icons.edit),
                                 onPressed: () {
                                   nameController.text =
@@ -176,13 +179,13 @@ class _ServiceListState extends State<ServiceList> {
                                                           Text(
                                                             "Update Service :",
                                                             style: TextStyle(
-                                                                color: Colors.blue,
+                                                                color: Colors.green,
                                                                 fontSize: 20),
                                                           ),
                                                           querySnapshot == null
                                                               ? CircularProgressIndicator(
                                                                   color: Colors
-                                                                      .blue)
+                                                                      .greenAccent)
                                                               : _dropDownButton(snapshot.data!.docs[index]['category']),
                                                           Row(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,7 +331,7 @@ class _ServiceListState extends State<ServiceList> {
                                                                         fontWeight: FontWeight.bold)),
                                                                 style: ButtonStyle(
                                                                   backgroundColor:
-                                                                      MaterialStatePropertyAll(Colors.blue),
+                                                                      MaterialStatePropertyAll(Colors.greenAccent),
                                                                 ),
                                                               ),
                                                               const SizedBox(
@@ -350,7 +353,7 @@ class _ServiceListState extends State<ServiceList> {
                                                                     backgroundColor:
                                                                         MaterialStatePropertyAll(
                                                                             Colors
-                                                                                .blue),
+                                                                                .greenAccent),
                                                                   )),
                                                             ],
                                                           ),
@@ -367,6 +370,7 @@ class _ServiceListState extends State<ServiceList> {
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
                             child: IconButton(
+                              color: Colors.green,
                               onPressed: () {
                                 _showAlertDialog(context, "Delete Service ",
                                     "Are You Sure ?", data.id);

@@ -18,12 +18,4 @@ class FirebaseServices {
     return reference!.doc().set(data);
   }
 
-  Future<void> UpdateOrderStatus(documentId, status) {
-    var result = Requests.doc(documentId).update({
-      'request status': status
-    });
-    return result;
-  }
-
-
 }

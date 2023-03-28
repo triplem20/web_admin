@@ -24,13 +24,21 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Center(child: Text(title),),
         content: Text(message),
         actions: <Widget>[
-          TextButton(onPressed: (){
+          TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
+            ),onPressed: (){
             Navigator.of(context).pop();
-          }, child: Text("Cancel")),
-          TextButton(onPressed: (){
+          }, child: Text("Cancel", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),),
+          TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
+            ),
+            onPressed: (){
+            Center(child:CircularProgressIndicator(color:Colors.greenAccent));
 
             Navigator.of(context).pushNamed(LoginScreen.id);
-          }, child: Text("Yes")),
+          }, child: Text("Log Out", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),),
 
 
         ],

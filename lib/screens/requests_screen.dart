@@ -85,7 +85,7 @@ class RequestsScreen extends StatelessWidget {
           if(snapshot.connectionState ==ConnectionState.waiting){
             return  Center(
               child: CircularProgressIndicator(
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.greenAccent,
               ),
             );
           }
@@ -143,7 +143,7 @@ class RequestsScreen extends StatelessWidget {
                                         width: 120,
                                         child:Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: Text("Order Accepted"),
+                                          child: Text("Order Accepted",style: TextStyle(color:Colors.black),),
                                         )
                                     ) :Row(
                                       children: [
@@ -153,14 +153,20 @@ class RequestsScreen extends StatelessWidget {
                                                 barrierDismissible: false,
                                                 builder: (BuildContext context) => AlertDialog(
                                                   title: Center(
-                                                    child: Text("Accept Request"),),
-                                                  content: Text("Are You Sure?"),
+                                                    child: Text("Accept Request",),),
+                                                  content: Text("Are You Sure?",),
                                                   actions: [
-                                                    TextButton(onPressed: (){
+                                                    TextButton(
+                                                        style: ButtonStyle(
+                                                          backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
+                                                        onPressed: (){
                                                       Navigator.of(context).pop();
 
-                                                    }, child: Text("Cancel")),
-                                                    TextButton(onPressed: (){
+                                                    }, child: Text("Cancel",
+                                                style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
+                                                    TextButton(
+                                                    style: ButtonStyle(
+                                                    backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),onPressed: (){
                                                       snapshot
                                                           .data!
                                                           .docs[index]
@@ -185,7 +191,7 @@ class RequestsScreen extends StatelessWidget {
 
 
                                                     },
-                                                        child: Text("Ok")),
+                                                        child: Text("Ok",style: TextStyle(color:Colors.white),)),
                                                   ],
                                                 )
                                             );
@@ -209,11 +215,17 @@ class RequestsScreen extends StatelessWidget {
                                                     child: Text("Reject Request"),),
                                                   content:Text("Are You Sure?"),
                                                   actions: [
-                                                    TextButton(onPressed: (){
+                                                    TextButton(
+                                                style: ButtonStyle(
+                                                backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
+                                                        onPressed: (){
                                                       Navigator.of(context).pop();
 
-                                                    }, child: Text("Cancel")),
-                                                    TextButton(onPressed: (){
+                                                    }, child: Text("Cancel", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
+                                                    TextButton(
+                                                        style: ButtonStyle(
+                                                          backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
+                                                        onPressed: (){
                                                       snapshot
                                                           .data!
                                                           .docs[index]
@@ -235,7 +247,7 @@ class RequestsScreen extends StatelessWidget {
                                                             "Request Rejected");
                                                       });
                                                     },
-                                                        child: Text("Ok")),
+                                                        child: Text("Ok",  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
                                                   ],
                                                 )
                                             );
@@ -261,7 +273,7 @@ class RequestsScreen extends StatelessWidget {
 
           } return  Center(
             child: CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.primary,
+              color:Colors.greenAccent,
             ),
           );
         }

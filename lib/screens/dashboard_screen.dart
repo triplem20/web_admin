@@ -11,7 +11,7 @@ class DashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Widget analatyicalWidget({required String title, String? value} ){
+    Widget analatyicalWidget({required String title, String? value,Color? color} ){
       return   Expanded(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -19,9 +19,9 @@ class DashScreen extends StatelessWidget {
             height: 110,
             width: 120,
             decoration: BoxDecoration(
-              color: Colors.indigo,
-              border: Border.all(width:3,color: Colors.indigoAccent),
-              borderRadius: BorderRadius.circular(10),
+              color: color,
+
+              borderRadius: BorderRadius.circular(5),
             ),
             child: Padding(
               padding: const EdgeInsets.all(15.0),
@@ -61,11 +61,11 @@ class DashScreen extends StatelessWidget {
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
            return Center(
-             child: CircularProgressIndicator(),
+             child: CircularProgressIndicator(color: Colors.green),
            );
         }
         if(snapshot.hasData){
-          return analatyicalWidget(title: "Total Users", value: snapshot.data!.size.toString());
+          return analatyicalWidget(title: "Total Users", value: snapshot.data!.size.toString(),color: Colors.green,);
         }
        return SizedBox();
 
@@ -82,11 +82,11 @@ class DashScreen extends StatelessWidget {
 
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Colors.brown),
               );
             }
             if(snapshot.hasData){
-              return analatyicalWidget(title: "Total Requests", value: snapshot.data!.size.toString());
+              return analatyicalWidget(title: "Total Requests", value: snapshot.data!.size.toString(),color: Colors.brown);
             }
             return SizedBox();
 
@@ -106,11 +106,11 @@ class DashScreen extends StatelessWidget {
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(color: Colors.black45),
                   );
                 }
                 if(snapshot.hasData){
-                  return analatyicalWidget(title: "Total Services", value: snapshot.data!.size.toString());
+                  return analatyicalWidget(title: "Total Services", value: snapshot.data!.size.toString(),color: Colors.black45);
                 }
                 return SizedBox();
               },
@@ -126,11 +126,11 @@ class DashScreen extends StatelessWidget {
 
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Colors.orangeAccent),
               );
             }
             if(snapshot.hasData){
-              return analatyicalWidget(title: "Total Categories", value: snapshot.data!.size.toString());
+              return analatyicalWidget(title: "Total Categories", value: snapshot.data!.size.toString(),color: Colors.orangeAccent);
             }
             return SizedBox();
           },

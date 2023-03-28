@@ -91,7 +91,7 @@ class UsersScreen extends StatelessWidget {
                                     children: [
                                       Container(
                                         width: 120,
-                                        child: Text(snapshot.data!.docs[index]['uid']),
+                                        child: Text(snapshot.data!.docs[index]['uid'] ),
                                       ),
                                       Container(
                                         width: 120,
@@ -115,25 +115,14 @@ class UsersScreen extends StatelessWidget {
 
 
                                       Container(
-                                        child: Row(
-                                          children: [
-                                            TextButton(onPressed: () {
-                                              _showAlertDialog(context, " Enable Account  ", "Are You Sure ?");
-                                            },
-                                              child: Text("Enable",
-                                                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
-                                              style: ButtonStyle(
-                                                backgroundColor: MaterialStatePropertyAll(Colors.blueAccent),
-                                              ),),
-                                            const SizedBox(width: 4),
-                                            TextButton(onPressed: (){
-                                              _showAlertDialog(context, "Disable Account", "Are You Sure ?");
-                                            }, child: Text("Disable",
+
+                                            child:TextButton(onPressed: (){
+                                              _showAlertDialog(context, "Delete User Account", "Are You Sure ?");
+                                            }, child: Text("Delete Account",
                                                 style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
                                                 style: ButtonStyle(
                                                   backgroundColor: MaterialStatePropertyAll(Colors.redAccent),)),
-                                          ],
-                                        ),
+
                                       ),
                                     ]),
                                 Divider(thickness: 3,color:Colors.grey),

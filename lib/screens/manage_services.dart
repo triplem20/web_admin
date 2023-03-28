@@ -61,6 +61,8 @@ class _ServiceScreenState extends State<ServiceScreen> {
   @override
   Widget _dropDownButton() {
     return DropdownButton<String>(
+
+      elevation: 8,
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
       hint: Text('Select Category'),
@@ -108,10 +110,10 @@ class _ServiceScreenState extends State<ServiceScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("Add Service :",
-              style: TextStyle(color: Colors.indigo, fontSize: 20),
+              style: TextStyle(color: Colors.green, fontSize: 20),
             ),
             SizedBox(height: 10),
-            querySnapshot == null ? CircularProgressIndicator(color: Colors.blue) : _dropDownButton(),
+            querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) : _dropDownButton(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -237,7 +239,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   child: Text(" Save ",
                       style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.indigo),
+                    backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
                   ),),
                 const SizedBox(width: 5),
                 TextButton(onPressed: (){
@@ -246,12 +248,12 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 }, child: Text("Cancel",
                     style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.indigo),)),
+                      backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),)),
               ],
             ),
             Divider(thickness: 5,color: Colors.green),
             SizedBox(height: 10),
-            Text("All Services :", style: TextStyle(color: Colors.indigo, fontSize: 20),),
+            Text("All Services :", style: TextStyle(color: Colors.green, fontSize: 20),),
             SizedBox(height: 10),
             ServiceList(),
 
