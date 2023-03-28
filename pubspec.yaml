@@ -34,12 +34,13 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   firebase_core: ^2.7.0
-  firebase_auth: ^4.2.1
+  firebase_auth: ^4.3.0
   cloud_firestore: ^4.4.4
   firebase_storage: ^11.0.15
   flutter_admin_scaffold: ^1.1.2
   file_picker: ^5.2.6
   flutter_easyloading: ^3.0.5
+
 
 
 dev_dependencies:
@@ -93,4 +94,4 @@ flutter:
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  # see https://flutter.dev/custo

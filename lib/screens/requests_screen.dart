@@ -1,10 +1,11 @@
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:web_admin/services/firebase_services.dart';
+
+
 
 
 class RequestsScreen extends StatelessWidget {
@@ -40,29 +41,29 @@ class RequestsScreen extends StatelessWidget {
             children: [
               Container(
                 width: 100,
-                child: Text('Request ID'),
+                child: Text('Request ID',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
               ),
               Container(
                 width: 100,
-                child: Text('Category'),
+                child: Text('Category',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
               ),
               Container(
                 width: 100,
-                child: Text('Name'),
-              ),
-
-              Container(
-                width: 100,
-                child: Text('Price'),
-              ),
-              Container(
-                width: 100,
-                child: Text('Status'),
+                child: Text('Name',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
               ),
 
               Container(
                 width: 100,
-                child: Text('Date'),
+                child: Text('Price',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+              ),
+              Container(
+                width: 100,
+                child: Text('Service ID',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+              ),
+
+              Container(
+                width: 100,
+                child: Text('Date',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
               ),
               Container(
                 width: 100,
@@ -119,9 +120,8 @@ class RequestsScreen extends StatelessWidget {
                                           ),
                                           Container(
                                             width: 120,
-                                            child: Text(snapshot.data!.docs[index]['request status']),
+                                            child: Text(snapshot.data!.docs[index]['productId']),
                                           ),
-
                                           Container(
                                             width: 120,
                                             child: Text(snapshot.data!.docs[index]['date']),

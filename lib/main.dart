@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:web_admin/screens/report_screen.dart';
 import 'package:web_admin/screens/splash_screen.dart';
 import 'package:web_admin/services/firebase_services.dart';
 import 'screens/dashboard_screen.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         CategoryScreen.id:(context) =>CategoryScreen(),
         ServiceScreen.id:(context) =>ServiceScreen(),
         UsersScreen.id:(context) => UsersScreen(),
+        ReportScreen.id:(context) => ReportScreen(),
 
       },
       debugShowCheckedModeBanner: false,

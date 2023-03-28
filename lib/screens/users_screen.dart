@@ -34,28 +34,28 @@ class UsersScreen extends StatelessWidget {
               children: [
                 Container(
                   width: 100,
-                  child: Text('ID'),
+                  child: Text('ID',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
                 Container(
                   width: 100,
-                  child: Text('Name'),
+                  child: Text('Name',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
                 Container(
                   width: 100,
-                  child: Text('Phone'),
+                  child: Text('Phone',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
 
                 Container(
                   width: 100,
-                  child: Text('Email'),
+                  child: Text('Email',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
                 Container(
                   width: 100,
-                  child: Text('Address'),
+                  child: Text('Address',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
                 Container(
                   width: 100,
-                  child: Text('  Operations  '),
+                  child: Text('  Operations  ',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
               ],
             ),
