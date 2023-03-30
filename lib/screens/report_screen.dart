@@ -1,37 +1,85 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:web_admin/services/firebase_services.dart';
+import 'package:chips_choice/chips_choice.dart';
+import 'package:intl/intl.dart';
 
 
-class UsersScreen extends StatelessWidget {
-  static const String id ="Users-Screen";
+class ReportScreen extends StatefulWidget {
+  static const String id ="Report-Screen";
+
+  @override
+  State<ReportScreen> createState() => _ReportScreenState();
+}
+
+class _ReportScreenState extends State<ReportScreen> {
   FirebaseServices _services = FirebaseServices();
 
 
 
 
-  deleteUse(id) async {
-    EasyLoading.show(status: "Deleting User");
-    _services.user?.delete();
-    _services.users.doc(id).delete();
-    EasyLoading.showSuccess("User Deleted");
-  }
+  int tag =0;
+  List<String>options =[
+    "All Requests",
+    "Accepted Requests",
+    "Rejected Requests",
+  ];
+  late bool accepted;
 
+  
+  filter(val){
+    if(val==1){
+      setState(() {
+        accepted =true;
+      });
+    }
+    if(val==2){
+      setState(() {
+        accepted =true;
+      });
+    }
+    if(val==0){
+      setState(() {
+        accepted = false;
+
+      });
+    }
+  }
+  
+  
 
   @override
   Widget build(BuildContext context) {
 
 
-
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.all(10.0),
       child:Column(
         children: [
-          Text("Customer Details",style: TextStyle(color: Colors.green, fontSize: 30),),
+          Text("Reports",style: TextStyle(color: Colors.green, fontSize: 30),),
+          Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width,
+            child: ChipsChoice.single(
+
+                value: tag,
+                onChanged: (val){
+                  setState(() {
+                   tag= val;
+                  });
+                },
+              choiceItems: C2Choice.listFrom<int, String>(
+                  source:options,
+                  value: (i,iii)=> i,
+                  label: (i,iii)=> iii
+              ),
+
+
+            ),
+          ),
           const SizedBox(height: 20),
+
           Container(height: 60,
             decoration: BoxDecoration(
               color: Colors.black12,
@@ -44,60 +92,67 @@ class UsersScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+
                 Container(
                   width: 100,
-                  child: Text('ID',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                  child: Text('Request ID',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
                 Container(
                   width: 100,
-                  child: Text('Name',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                ),
-                Container(
-                  width: 100,
-                  child: Text('Phone',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                  child: Text('User ID',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
 
                 Container(
                   width: 100,
-                  child: Text('Email',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                  child: Text('Username',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
                 Container(
                   width: 100,
-                  child: Text('Address',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                  child: Text('Service ID',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                ),
+
+                Container(
+                  width: 100,
+                  child: Text('Date',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
                 Container(
                   width: 100,
-                  child: Text('  Operations  ',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                  child: Text('Request Status',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 5),
-          Container(
-            height: 600,
 
+           Container(
+            height: 600,
             child:
             StreamBuilder<QuerySnapshot>(
-                stream: _services.users.snapshots(),
+                stream: _services.Requests.where('request status', isEqualTo: accepted)
+                    .snapshots(),
                 builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                   if(snapshot.hasError){
                     return Text("Error");
                   }
+                  if(snapshot.data!.size==0){
+                    return Center(
+                      child: Text("No Requests"),
+                    );
+                  }
                   if(snapshot.connectionState ==ConnectionState.waiting){
                     return  Center(
                       child: CircularProgressIndicator(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Colors.greenAccent,
                       ),
                     );
                   }
                   if(snapshot.hasData){
                     return
                       ListView.builder(
-
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context ,index) =>
-
                             Column(
+
                               children: [
                                 Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,39 +160,42 @@ class UsersScreen extends StatelessWidget {
                                     children: [
                                       Container(
                                         width: 120,
-                                        child: Text(snapshot.data!.docs[index]['uid'] ),
+                                        child: Text(snapshot.data!.docs[index]['id']),
                                       ),
                                       Container(
                                         width: 120,
-                                        child: Text(snapshot.data!.docs[index]['name']),
+                                        child: Text(snapshot.data!.docs[index]['productId']),
                                       ),
                                       Container(
                                         width: 120,
-                                        child: Text(snapshot.data!.docs[index]['phone']),
+                                        child: Text(snapshot.data!.docs[index]['Username']),
                                       ),
 
                                       Container(
                                         width: 120,
-                                        child: Text("${snapshot.data!.docs[index]['email']}"),
+                                        child: Text(snapshot.data!.docs[index]['productId']),
                                       ),
                                       Container(
                                         width: 120,
-                                        child: Text(snapshot.data!.docs[index]['address']),
+                                        child: Text('on ${DateFormat.yMMMd().format(snapshot.data!.docs[index]['Order Date'].toDate())}'),
                                       ),
-
-
-
-
                                       Container(
-
-                                            child:TextButton(onPressed: (){
-                                              _showAlertDialog(context, "Delete User Account", "Are You Sure ?",_services.users!.id);
-                                            }, child: Text("Delete Account",
-                                                style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
-                                                style: ButtonStyle(
-                                                  backgroundColor: MaterialStatePropertyAll(Colors.redAccent),)),
-
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        width: 120,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Center(child: snapshot.data!.docs[index]['request status']),
+                                        ),
                                       ),
+
+
+
+
+
+
                                     ]),
                                 Divider(thickness: 3,color:Colors.grey),
                               ],
@@ -147,40 +205,20 @@ class UsersScreen extends StatelessWidget {
 
                   } return  Center(
                     child: CircularProgressIndicator(
-                      color: Colors.greenAccent,
+                      color:Colors.greenAccent,
                     ),
                   );
                 }
             ),
           ),
 
+
         ],
       ),
     );
 
   }
-  _showAlertDialog(context,title, message,id)async {
-    showCupertinoModalPopup<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => AlertDialog(
-          title: Center(child: Text(title),),
-          content: Container(width: 10,color:Colors.red,child: Text(message)),
-          actions: <Widget>[
-            TextButton(onPressed: (){
-              Navigator.of(context).pop();
-            }, child: Text("Cancel")),
-            TextButton(onPressed: (){
-             deleteUse(id);
-             Navigator.of(context).pop();
 
-
-
-            }, child: Text("Delete")),
-
-
-          ],
-        )
-    );
-  }
 }
+
+

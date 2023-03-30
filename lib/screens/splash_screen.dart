@@ -29,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen>{
       decoration: BoxDecoration(
         image: DecorationImage(image: AssetImage('assets/images/logo1.jpg')),
         borderRadius: BorderRadius.circular(20),
+
       ),
     ),
       ),

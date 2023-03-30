@@ -10,6 +10,7 @@ import 'screens/manage_services.dart';
 import 'screens/requests_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
+import 'package:provider/provider.dart';
 import 'screens/users_screen.dart';
 
 void main() async {
@@ -24,7 +25,8 @@ void main() async {
         appId: "1:639592067343:web:19e7ac6cb6c1e1a40c0e7a",
         measurementId: "G-MQE34741C2"),
   );
-  runApp( MyApp());
+  runApp(MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
@@ -16,6 +17,17 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+FirebaseAuth _auth =FirebaseAuth.instance;
+
+Future<String?> signOut() async {
+  try {
+    await FirebaseAuth.instance.signOut();
+  } catch (err) {
+    return err.toString();
+  }
+  return null;
+}
+
 class _HomeScreenState extends State<HomeScreen> {
   _showAlertDialog(context,title, message)async {
     showCupertinoModalPopup<void>(
@@ -29,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
             ),onPressed: (){
+
             Navigator.of(context).pop();
           }, child: Text("Cancel", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),),
           TextButton(
@@ -36,9 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
             ),
             onPressed: (){
-            Center(child:CircularProgressIndicator(color:Colors.greenAccent));
+              _auth.signOut();
 
-            Navigator.of(context).pushNamed(LoginScreen.id);
+
+
           }, child: Text("Log Out", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),),
 
 
