@@ -6,20 +6,24 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:web_admin/services/firebase_services.dart';
 
 
-class UsersScreen extends StatelessWidget {
+class UsersScreen extends StatefulWidget {
   static const String id ="Users-Screen";
+
+  @override
+  State<UsersScreen> createState() => _UsersScreenState();
+}
+
+class _UsersScreenState extends State<UsersScreen> {
   FirebaseServices _services = FirebaseServices();
 
+  deleteUser(id) async {
 
-
-
-  deleteUse(id) async {
-    EasyLoading.show(status: "Deleting User");
     _services.user?.delete();
     _services.users.doc(id).delete();
     EasyLoading.showSuccess("User Deleted");
-  }
 
+
+        }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +135,7 @@ class UsersScreen extends StatelessWidget {
                                       Container(
 
                                             child:TextButton(onPressed: (){
-                                              _showAlertDialog(context, "Delete User Account", "Are You Sure ?",_services.users!.id);
+                                              _showAlertDialog(context, "Delete User Account", "Are You Sure ?",snapshot.data!.docs[index]['uid']);
                                             }, child: Text("Delete Account",
                                                 style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
                                                 style: ButtonStyle(
@@ -159,20 +163,37 @@ class UsersScreen extends StatelessWidget {
     );
 
   }
+
   _showAlertDialog(context,title, message,id)async {
     showCupertinoModalPopup<void>(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => AlertDialog(
           title: Center(child: Text(title),),
-          content: Container(width: 10,color:Colors.red,child: Text(message)),
+          content: Container(width: 10,color:Colors.red,child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(message),
+          )),
           actions: <Widget>[
             TextButton(onPressed: (){
               Navigator.of(context).pop();
             }, child: Text("Cancel")),
             TextButton(onPressed: (){
-             deleteUse(id);
-             Navigator.of(context).pop();
+
+              deleteUser(id).then((
+    value) {
+    Navigator
+        .of(
+    context)
+        .pop();
+    EasyLoading
+        .showSuccess(
+    "User Deleted");
+    });
+    EasyLoading.show(status: 'Deleting..');
+    
+    
+
 
 
 

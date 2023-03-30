@@ -25,23 +25,23 @@ class _ReportScreenState extends State<ReportScreen> {
     "Accepted Requests",
     "Rejected Requests",
   ];
-  late bool accepted;
+   String? accepted;
 
   
   filter(val){
     if(val==1){
       setState(() {
-        accepted =true;
+        accepted ="Accepted";
       });
     }
     if(val==2){
       setState(() {
-        accepted =true;
+        accepted ="Accepted";
       });
     }
     if(val==0){
       setState(() {
-        accepted = false;
+        accepted = null;
 
       });
     }

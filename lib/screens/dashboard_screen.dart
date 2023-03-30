@@ -35,8 +35,8 @@ class DashScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(value!,style: TextStyle(fontSize: 35,color: Colors.white,  fontWeight: FontWeight.bold),),
-                      Icon(Icons.show_chart,color: Colors.white,size: 15,),
+                      Text(value!,style: TextStyle(fontSize: 30,color: Colors.white,  fontWeight: FontWeight.bold),),
+                      Icon(Icons.show_chart,color: Colors.white,size: 25,),
                     ],
                   )
                 ],
