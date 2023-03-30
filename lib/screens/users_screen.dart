@@ -177,7 +177,8 @@ class _UsersScreenState extends State<UsersScreen> {
                 borderRadius: BorderRadius.circular(3),
               ),child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Text(message,style: TextStyle(color: Colors.red),),
+            child: Text(message,style: TextStyle(color: Color.fromARGB(
+                200, 86, 0, 0)),),
           )),
           actions: <Widget>[
             TextButton(onPressed: (){
