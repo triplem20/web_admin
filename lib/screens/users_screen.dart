@@ -19,7 +19,7 @@ class _UsersScreenState extends State<UsersScreen> {
   deleteUser(id) async {
 
     _services.user?.delete();
-    _services.users.doc(id).delete();
+
     EasyLoading.showSuccess("User Deleted");
 
 
@@ -170,9 +170,14 @@ class _UsersScreenState extends State<UsersScreen> {
         barrierDismissible: false,
         builder: (BuildContext context) => AlertDialog(
           title: Center(child: Text(title),),
-          content: Container(width: 10,color:Colors.red,child: Padding(
+          content: Container(width: 10,
+
+              decoration: BoxDecoration(
+                  color:Color.fromARGB(252, 201, 65, 65),
+                borderRadius: BorderRadius.circular(3),
+              ),child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Text(message),
+            child: Text(message,style: TextStyle(color: Colors.red),),
           )),
           actions: <Widget>[
             TextButton(onPressed: (){
