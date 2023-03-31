@@ -145,14 +145,14 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                     snapshot.data!.docs[index]['status']== 'Accepted'?
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.grey,
+                                        color: Colors.white38,
                                         borderRadius: BorderRadius.circular(5),
                                       ),
 
                                         width: 120,
                                         child:Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: Text("Order Accepted",style: TextStyle(color:Colors.black),),
+                                          child: Text("Order Accepted",style: TextStyle(color:Colors.green,fontWeight: FontWeight.bold),),
                                         )
                                     ) :Row(
                                       children: [

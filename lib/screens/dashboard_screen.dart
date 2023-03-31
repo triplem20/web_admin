@@ -93,6 +93,7 @@ class DashScreen extends StatelessWidget {
 
             },
           ),
+
           ]
     ),
           Row(
@@ -138,6 +139,51 @@ class DashScreen extends StatelessWidget {
           ),
             ],
     ),
+            SizedBox(height:5),
+            Row(
+              children: [
+                SizedBox(width:10),
+                StreamBuilder<QuerySnapshot>(
+                  stream: _services.Requests.where('status',isEqualTo: 'Rejected').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(color: Colors.redAccent),
+                      );
+                    }
+                    if(snapshot.hasData){
+                      return analatyicalWidget(title: "Rejected Requests", value: snapshot.data!.size.toString(),color: Colors.redAccent);
+                    }
+                    return SizedBox();
+                  },
+                ),
+                SizedBox(width:10),
+                StreamBuilder<QuerySnapshot>(
+                  stream: _services.Requests.where('status',isEqualTo: 'Accepted').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(color: Colors.greenAccent),
+                      );
+                    }
+                    if(snapshot.hasData){
+                      return analatyicalWidget(title: "Accepted Requests", value: snapshot.data!.size.toString(),color: Colors.greenAccent);
+                    }
+                    return SizedBox();
+                  },
+                ),
+              ],
+            ),
+
+
     ]
     ),
       );

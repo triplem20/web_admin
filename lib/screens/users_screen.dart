@@ -173,12 +173,12 @@ class _UsersScreenState extends State<UsersScreen> {
           content: Container(width: 10,
 
               decoration: BoxDecoration(
-                  color:Color.fromARGB(252, 201, 65, 65),
+                  color:Color.fromARGB(255, 252, 118, 105),
                 borderRadius: BorderRadius.circular(3),
               ),child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(message,style: TextStyle(color: Color.fromARGB(
-                200, 86, 0, 0)),),
+                200, 86, 0, 0),fontWeight: FontWeight.bold),),
           )),
           actions: <Widget>[
             TextButton(onPressed: (){
