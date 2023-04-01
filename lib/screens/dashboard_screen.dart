@@ -72,10 +72,11 @@ class DashScreen extends StatelessWidget {
 
             },
           ),
+
           const SizedBox(width:10),
 
           StreamBuilder<QuerySnapshot>(
-            stream: _services.Requests.snapshots(),
+            stream: _services.category.snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return Text('Something went wrong');
@@ -83,16 +84,16 @@ class DashScreen extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: CircularProgressIndicator(color: Colors.brown),
+                  child: CircularProgressIndicator(color: Colors.black45),
                 );
               }
               if(snapshot.hasData){
-                return analatyicalWidget(title: "Total Requests", value: snapshot.data!.size.toString(),color: Colors.brown);
+                return analatyicalWidget(title: "Total Categories", value: snapshot.data!.size.toString(),color: Colors.black45);
               }
               return SizedBox();
-
             },
           ),
+
 
           ]
     ),
@@ -108,40 +109,59 @@ class DashScreen extends StatelessWidget {
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
-                      child: CircularProgressIndicator(color: Colors.black45),
+                      child: CircularProgressIndicator(color: Colors.brown),
                     );
                   }
                   if(snapshot.hasData){
-                    return analatyicalWidget(title: "Total Services", value: snapshot.data!.size.toString(),color: Colors.black45);
+                    return analatyicalWidget(title: "Total Services", value: snapshot.data!.size.toString(),color: Colors.brown);
                   }
                   return SizedBox();
                 },
               ),
               const SizedBox(width:10),
+              StreamBuilder<QuerySnapshot>(
+                stream: _services.Requests.snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
 
-          StreamBuilder<QuerySnapshot>(
-            stream: _services.category.snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return Text('Something went wrong');
-              }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(color: Colors.orangeAccent),
+                    );
+                  }
+                  if(snapshot.hasData){
+                    return analatyicalWidget(title: "Total Requests", value: snapshot.data!.size.toString(),color: Colors.orangeAccent);
+                  }
+                  return SizedBox();
 
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(color: Colors.orangeAccent),
-                );
-              }
-              if(snapshot.hasData){
-                return analatyicalWidget(title: "Total Categories", value: snapshot.data!.size.toString(),color: Colors.orangeAccent);
-              }
-              return SizedBox();
-            },
-          ),
+                },
+              ),
             ],
     ),
-            SizedBox(height:5),
+            SizedBox(height:35),
             Row(
               children: [
+                SizedBox(width:10),
+                StreamBuilder<QuerySnapshot>(
+                  stream: _services.Requests.where('status',isEqualTo: 'Pending').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(color: Colors.deepOrangeAccent),
+                      );
+                    }
+                    if(snapshot.hasData){
+                      return analatyicalWidget(title: "Pending Requests", value: snapshot.data!.size.toString(),color: Colors.deepOrangeAccent);
+                    }
+                    return SizedBox();
+                  },
+                ),
                 SizedBox(width:10),
                 StreamBuilder<QuerySnapshot>(
                   stream: _services.Requests.where('status',isEqualTo: 'Rejected').snapshots(),

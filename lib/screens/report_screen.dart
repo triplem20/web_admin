@@ -24,6 +24,8 @@ class _ReportScreenState extends State<ReportScreen> {
     "All Requests",
     "Accepted Requests",
     "Rejected Requests",
+    "Newest to Oldest",
+    "Oldest to Newest",
   ];
    String? accepted;
 
@@ -71,8 +73,8 @@ class _ReportScreenState extends State<ReportScreen> {
                 },
               choiceItems: C2Choice.listFrom<int, String>(
                   source:options,
-                  value: (i,iii)=> i,
-                  label: (i,iii)=> iii
+                  value: (i,v)=> i,
+                  label: (i,v)=> v
               ),
 
 
@@ -128,7 +130,7 @@ class _ReportScreenState extends State<ReportScreen> {
             height: 600,
             child:
             StreamBuilder<QuerySnapshot>(
-                stream: _services.Requests.where('request status', isEqualTo: accepted)
+                stream: _services.Requests.where('status', isEqualTo: accepted)
                     .snapshots(),
                 builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                   if(snapshot.hasError){
@@ -187,7 +189,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                         width: 120,
                                         child: Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: Center(child: snapshot.data!.docs[index]['request status']),
+                                          child: Center(child: snapshot.data!.docs[index]['status']),
                                         ),
                                       ),
 
