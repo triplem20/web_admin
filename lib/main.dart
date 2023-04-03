@@ -16,7 +16,7 @@ import 'screens/users_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: FirebaseOptions(
+    options: const FirebaseOptions(
         apiKey: "AIzaSyCATErbyQc5qNmUcIfmIwnBHa-6MjRTdCI",
         authDomain: "flutter-topcare.firebaseapp.com",
         projectId: "flutter-topcare",
@@ -26,12 +26,9 @@ void main() async {
         measurementId: "G-MQE34741C2"),
   );
   runApp(MyApp());
-  
 }
 
 class MyApp extends StatelessWidget {
-
-
   FirebaseServices _services = FirebaseServices();
   // This widget is the root of your application.
   @override
@@ -47,12 +44,11 @@ class MyApp extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         DashScreen.id: (context) => DashScreen(),
-        RequestsScreen.id:(context) =>RequestsScreen(),
-        CategoryScreen.id:(context) =>CategoryScreen(),
-        ServiceScreen.id:(context) =>ServiceScreen(),
-        UsersScreen.id:(context) => UsersScreen(),
-        ReportScreen.id:(context) => ReportScreen(),
-
+        RequestsScreen.id: (context) => RequestsScreen(),
+        CategoryScreen.id: (context) => CategoryScreen(),
+        ServiceScreen.id: (context) => ServiceScreen(),
+        UsersScreen.id: (context) => UsersScreen(),
+        ReportScreen.id: (context) => ReportScreen(),
       },
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
