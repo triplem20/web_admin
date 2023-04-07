@@ -93,54 +93,56 @@ class _ReportScreenState extends State<ReportScreen> {
             style: TextStyle(color: Colors.green, fontSize: 30),
           ),
           Container(
-            height: 60,
+            height: 160,
             width: MediaQuery.of(context).size.width,
-            child: Row(
+            child:  Column(
               children: [
-                querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton1(),
-                SizedBox(width: 3),
-                ChipsChoice.single(
-                  value: tag,
-                  onChanged: (val) {
-                    setState(() {
-                      tag = val;
-                      if (val == 0) {
-                        stream = FirebaseFirestore.instance
-                            .collection("Requests")
-                            .snapshots();
-                      }
-                      if (val == 1) {
-                        stream = _services.Requests.where('status',
-                            isEqualTo: 'Accepted')
-                            .snapshots();
-                      }
-                      if (val == 2) {
-                        stream = _services.Requests.where('status',
-                            isEqualTo: 'Rejected')
-                            .snapshots();
-                      }
-                      if (val == 3) {
-                        stream = _services.Requests.orderBy('id',descending: true)
-                            .snapshots();
-                      }
-                      if (val == 4) {
-                        stream = _services.Requests.orderBy('id',descending: false)
-                            .snapshots();
-                      }
+                Container(child: querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton1()),
+                SizedBox(height: 3),
+                Container(
+                  child: ChipsChoice.single(
+                    value: tag,
+                    onChanged: (val) {
+                      setState(() {
+                        tag = val;
+                        if (val == 0) {
+                          stream = FirebaseFirestore.instance
+                              .collection("Requests")
+                              .snapshots();
+                        }
+                        if (val == 1) {
+                          stream = _services.Requests.where('status',
+                              isEqualTo: 'Accepted')
+                              .snapshots();
+                        }
+                        if (val == 2) {
+                          stream = _services.Requests.where('status',
+                              isEqualTo: 'Rejected')
+                              .snapshots();
+                        }
+                        if (val == 3) {
+                          stream = _services.Requests.orderBy('id',descending: true)
+                              .snapshots();
+                        }
+                        if (val == 4) {
+                          stream = _services.Requests.orderBy('id',descending: false)
+                              .snapshots();
+                        }
 
 
 
-                    });
-                  },
-                  choiceItems: C2Choice.listFrom<int, String>(
-                      source: options, value: (i, v) => i, label: (i, v) => v),
+                      });
+                    },
+                    choiceItems: C2Choice.listFrom<int, String>(
+                        source: options, value: (i, v) => i, label: (i, v) => v),
+                  ),
                 ),
 
 
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 3),
           Container(
             height: 60,
             decoration: BoxDecoration(
