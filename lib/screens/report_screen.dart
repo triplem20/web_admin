@@ -19,7 +19,7 @@ class _ReportScreenState extends State<ReportScreen> {
   QuerySnapshot? querySnapshot;
 
 
-  ValueNotifier<DateTime> _dateTimeNotifier = ValueNotifier<DateTime>(DateTime.now());
+
 
 
   var stream;
@@ -29,8 +29,8 @@ class _ReportScreenState extends State<ReportScreen> {
     "All Requests",
     "Accepted Requests",
     "Rejected Requests",
-    "Oldest To Newest",
     "Newest To Oldest",
+    "Oldest To Newest",
   ];
 
 
@@ -96,6 +96,7 @@ class _ReportScreenState extends State<ReportScreen> {
             height: 160,
             width: MediaQuery.of(context).size.width,
             child:  Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(child: querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton1()),
                 SizedBox(height: 3),
@@ -142,7 +143,7 @@ class _ReportScreenState extends State<ReportScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 3),
+
           Container(
             height: 60,
             decoration: BoxDecoration(

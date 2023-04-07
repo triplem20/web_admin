@@ -1,4 +1,5 @@
 
+import 'package:chips_choice/chips_choice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +22,15 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
   TextEditingController statusController =TextEditingController();
 
+  var stream;
+  int tag = 0;
+  List<String> options = [
+    "All Requests",
+    "Pending",
+  ];
+
   @override
   Widget build(BuildContext context) {
-
-
 
     return  Padding(
         padding: const EdgeInsets.all(10.0),
@@ -32,6 +38,32 @@ class _RequestsScreenState extends State<RequestsScreen> {
         children: [
           Text("Requests",style: TextStyle(color: Colors.green, fontSize: 30),),
         const SizedBox(height: 20),
+          Container(
+            child: ChipsChoice.single(
+              value: tag,
+              onChanged: (val) {
+                setState(() {
+                  tag = val;
+                  if (val == 0) {
+                    stream = FirebaseFirestore.instance
+                        .collection("Requests")
+                        .snapshots();
+                  }
+                  if (val == 1) {
+                    stream = _services.Requests.where('status',
+                        isEqualTo: 'Pending')
+                        .snapshots();
+                  }
+
+
+
+
+                });
+              },
+              choiceItems: C2Choice.listFrom<int, String>(
+                  source: options, value: (i, v) => i, label: (i, v) => v),
+            ),
+          ),
 
         Container(height: 60,
           decoration: BoxDecoration(
@@ -86,10 +118,21 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
         child:
         StreamBuilder<QuerySnapshot>(
-        stream: _services.Requests.snapshots(),
+        stream: stream ??
+            FirebaseFirestore.instance
+                .collection("Requests")
+                .snapshots(),
         builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
           if(snapshot.hasError){
             return Text("Error");
+          }
+          if (snapshot == null) {
+            return Text("Error");
+          }
+          if (snapshot.data!.size == 0) {
+            return Center(
+              child: Text("No Requests"),
+            );
           }
           if(snapshot.connectionState ==ConnectionState.waiting){
             return  Center(
@@ -153,7 +196,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                         width: 120,
                                         child:Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: Text("Order Accepted",style: TextStyle(color:Colors.green,fontWeight: FontWeight.bold),),
+                                          child: Text("Accepted",style: TextStyle(color:Colors.green,fontWeight: FontWeight.bold),),
                                         )
                                     ) :Row(
                                       children: [
