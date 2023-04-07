@@ -51,8 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: (){
               _auth.signOut();
 
-
-
           }, child: Text("Log Out", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),),
 
 

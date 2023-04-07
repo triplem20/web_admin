@@ -69,7 +69,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
               ),
               Container(
                 width: 100,
-                child: Text('Date',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                child: Text('Service Date',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
               ),
 
               Container(
@@ -99,6 +99,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
             );
           }
           if(snapshot.hasData){
+            var data = snapshot.requireData;
             return
             ListView.builder(
                   itemCount: snapshot.data!.docs.length,
@@ -111,7 +112,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                         children: [
                                           Container(
                                           width: 120,
-                                          child: Text("${snapshot.data!.docs[index]['id']}"),
+                                          child: Text(DateFormat.yMMMd().add_jm().format(DateTime.parse('${data.docs[index]['id']}'))),
                                         ),
                                           Container(
                                             width: 120,
@@ -263,8 +264,10 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
 
 
-                                          }, child: Text("Reject",
-                                              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+                                          }, child: Text( snapshot.data!.docs[index]['status']== 'Rejected'? "Rejected" : "Reject",
+                                              style: TextStyle(fontWeight: FontWeight.bold,
+                                                  color:snapshot.data!.docs[index]['status']== 'Rejected'? Colors.red :Colors.white
+                                              )),
                                               style: ButtonStyle(
                                                 backgroundColor: MaterialStatePropertyAll( snapshot.data!.docs[index]['status']== 'Rejected'
                                                     ?Colors.grey :Colors.red),)),

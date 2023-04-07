@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:web_admin/services/firebase_services.dart';
 import 'package:chips_choice/chips_choice.dart';
@@ -14,34 +15,72 @@ class ReportScreen extends StatefulWidget {
 
 class _ReportScreenState extends State<ReportScreen> {
   FirebaseServices _services = FirebaseServices();
+  dynamic dropdownValue;
+  QuerySnapshot? querySnapshot;
+
+
+  ValueNotifier<DateTime> _dateTimeNotifier = ValueNotifier<DateTime>(DateTime.now());
+
+
   var stream;
+  String? selectedOption;
   int tag = 0;
   List<String> options = [
     "All Requests",
     "Accepted Requests",
     "Rejected Requests",
-    "Newest",
-    "Oldest",
+    "Oldest To Newest",
+    "Newest To Oldest",
   ];
-  String? accepted;
 
-  filter(val) {
-    if (val == 1) {
-      setState(() {
-        accepted = "Accepted";
-      });
-    }
-    if (val == 2) {
-      setState(() {
-        accepted = "Accepted";
-      });
-    }
-    if (val == 0) {
-      setState(() {
-        accepted = null;
-      });
-    }
+
+
+  @override
+  Widget _dropDownButton1() {
+    return DropdownButton<String>(
+      style: TextStyle(fontSize: 15),
+
+      elevation: 8,
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      hint: Text('Select User ID'),
+      onChanged: (String? newValue) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = newValue!;
+          stream = _services.Requests.where('uid', isEqualTo: dropdownValue)
+              .snapshots();
+
+
+        });
+      },
+      items: querySnapshot!.docs.map((e) {
+        return DropdownMenuItem<String>(
+          value: e['uid'],
+          child: Text(e["uid"]),
+        );
+      }).toList(),
+
+    );
   }
+  getUsersList(){
+    return _services.users.get().then((QuerySnapshot qs) {
+      setState(() {
+        querySnapshot = qs;
+      });
+    });
+  }
+  @override
+  void initState() {
+    getUsersList();
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,43 +95,52 @@ class _ReportScreenState extends State<ReportScreen> {
           Container(
             height: 60,
             width: MediaQuery.of(context).size.width,
-            child: ChipsChoice.single(
-              value: tag,
-              onChanged: (val) {
-                setState(() {
-                  tag = val;
-                  if (val == 0) {
-                    stream = FirebaseFirestore.instance
-                        .collection("Requests")
-                        .snapshots();
-                  }
-                  if (val == 1) {
-                    stream = _services.Requests.where('status',
-                            isEqualTo: 'Accepted')
-                        .snapshots();
-                  }
-                  if (val == 2) {
-                    stream = _services.Requests.where('status',
-                            isEqualTo: 'Rejected')
-                        .snapshots();
-                  }
-                  if (val == 3) {
-                    stream =
-                        _services.Requests.where('date', isEqualTo: 'Tomorrw')
+            child: Row(
+              children: [
+                querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton1(),
+                SizedBox(width: 3),
+                ChipsChoice.single(
+                  value: tag,
+                  onChanged: (val) {
+                    setState(() {
+                      tag = val;
+                      if (val == 0) {
+                        stream = FirebaseFirestore.instance
+                            .collection("Requests")
                             .snapshots();
-                  }
-                  if (val == 4) {
-                    stream = _services.Requests.where('date',
-                            isEqualTo: 'Within this week')
-                        .snapshots();
-                  }
-                });
-              },
-              choiceItems: C2Choice.listFrom<int, String>(
-                  source: options, value: (i, v) => i, label: (i, v) => v),
+                      }
+                      if (val == 1) {
+                        stream = _services.Requests.where('status',
+                            isEqualTo: 'Accepted')
+                            .snapshots();
+                      }
+                      if (val == 2) {
+                        stream = _services.Requests.where('status',
+                            isEqualTo: 'Rejected')
+                            .snapshots();
+                      }
+                      if (val == 3) {
+                        stream = _services.Requests.orderBy('id',descending: true)
+                            .snapshots();
+                      }
+                      if (val == 4) {
+                        stream = _services.Requests.orderBy('id',descending: false)
+                            .snapshots();
+                      }
+
+
+
+                    });
+                  },
+                  choiceItems: C2Choice.listFrom<int, String>(
+                      source: options, value: (i, v) => i, label: (i, v) => v),
+                ),
+
+
+              ],
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Container(
             height: 60,
             decoration: BoxDecoration(
@@ -107,42 +155,36 @@ class _ReportScreenState extends State<ReportScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
-                  width: 100,
+                  width: 120,
                   child: Text(
-                    'Request ID',
+                    'Request Date',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
+
                 Container(
-                  width: 100,
-                  child: Text(
-                    'User ID',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                  width: 100,
-                  child: Text(
-                    'Username',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                  width: 100,
+                  width: 120,
                   child: Text(
                     'Service ID',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
-                  width: 100,
+                  width: 120,
                   child: Text(
-                    'Date',
+                    'User ID',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
-                  width: 100,
+                  width: 120,
+                  child: Text(
+                    'Service Date',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Container(
+                  width: 120,
                   child: Text(
                     'Request Status',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -193,20 +235,20 @@ class _ReportScreenState extends State<ReportScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Container(
-                                  width: 120,
-                                  child: Text(data.docs[index]['id']),
+                                  width: 100,
+                                  child: Text(DateFormat.yMMMd().add_jm().format(DateTime.parse('${data.docs[index]['id']}'))),
                                 ),
                                 Container(
-                                  width: 120,
+                                  width: 100,
                                   child: Text(data.docs[index]['productId']),
                                 ),
                                 Container(
-                                  width: 120,
+                                  width: 100,
                                   child: Text(
-                                      snapshot.data!.docs[index]['productId']),
+                                      snapshot.data!.docs[index]['uid']),
                                 ),
                                 Container(
-                                  width: 120,
+                                  width: 100,
                                   child: Text(
                                       'on ${data.docs[index]['date'].toString()}'),
                                 ),
@@ -221,7 +263,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                                 : Colors.grey,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  width: 120,
+                                  width: 100,
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Center(

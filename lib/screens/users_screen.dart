@@ -69,10 +69,6 @@ class _UsersScreenState extends State<UsersScreen> {
                   width: 100,
                   child: Text('Address',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                 ),
-                Container(
-                  width: 100,
-                  child: Text('  Operations  ',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                ),
               ],
             ),
           ),
@@ -131,17 +127,6 @@ class _UsersScreenState extends State<UsersScreen> {
 
 
 
-
-                                      Container(
-
-                                            child:TextButton(onPressed: (){
-                                              _showAlertDialog(context, "Delete User Account", "Are You Sure ?",snapshot.data!.docs[index]['uid']);
-                                            }, child: Text("Delete Account",
-                                                style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
-                                                style: ButtonStyle(
-                                                  backgroundColor: MaterialStatePropertyAll(Colors.redAccent),)),
-
-                                      ),
                                     ]),
                                 Divider(thickness: 3,color:Colors.grey),
                               ],

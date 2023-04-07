@@ -251,6 +251,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                       backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),)),
               ],
             ),
+            SizedBox(height: 10),
             Divider(thickness: 5,color: Colors.green),
             SizedBox(height: 10),
             Text("All Services :", style: TextStyle(color: Colors.green, fontSize: 20),),
