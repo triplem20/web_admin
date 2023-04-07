@@ -61,7 +61,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                 });
               },
               choiceItems: C2Choice.listFrom<int, String>(
-                  source: options, value: (i, v) => i, label: (i, v) => v),
+                  source: options, value: (i, ii) => i, label: (i, ii) => ii),
             ),
           ),
 
@@ -123,6 +123,10 @@ class _RequestsScreenState extends State<RequestsScreen> {
                 .collection("Requests")
                 .snapshots(),
         builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+
+          if (!snapshot.hasData) {
+            return Text("No Data");
+          }
           if(snapshot.hasError){
             return Text("Error");
           }
@@ -143,9 +147,8 @@ class _RequestsScreenState extends State<RequestsScreen> {
           }
           if(snapshot.hasData){
             var data = snapshot.requireData;
-            return
-            ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
+            return ListView.builder(
+                  itemCount: data.size,
                   itemBuilder: (context ,index) =>
                           Column(
                             children: [

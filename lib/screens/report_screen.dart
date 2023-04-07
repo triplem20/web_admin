@@ -96,7 +96,7 @@ class _ReportScreenState extends State<ReportScreen> {
             height: 160,
             width: MediaQuery.of(context).size.width,
             child:  Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 Container(child: querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton1()),
                 SizedBox(height: 3),
