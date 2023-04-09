@@ -6,6 +6,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:web_admin/services/firebase_services.dart';
 
 
+
+
 class UsersScreen extends StatefulWidget {
   static const String id ="Users-Screen";
 
@@ -16,14 +18,7 @@ class UsersScreen extends StatefulWidget {
 class _UsersScreenState extends State<UsersScreen> {
   FirebaseServices _services = FirebaseServices();
 
-  deleteUser(id) async {
 
-    _services.user?.delete();
-
-    EasyLoading.showSuccess("User Deleted");
-
-
-        }
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +75,20 @@ class _UsersScreenState extends State<UsersScreen> {
             StreamBuilder<QuerySnapshot>(
                 stream: _services.users.snapshots(),
                 builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                  if(snapshot.hasError){
-                    return Text("Error");
-                  }
+    if (!snapshot.hasData) {
+    return Text("No Data");
+    }
+    if (snapshot.hasError) {
+    return Text("Error");
+    }
+    if (snapshot == null) {
+    return Text("Error");
+    }
+    if (snapshot.data!.size == 0) {
+      return Center(
+        child: Text("No Users"),
+      );
+    }
                   if(snapshot.connectionState ==ConnectionState.waiting){
                     return  Center(
                       child: CircularProgressIndicator(
@@ -143,6 +149,8 @@ class _UsersScreenState extends State<UsersScreen> {
             ),
           ),
 
+
+
         ],
       ),
     );
@@ -170,21 +178,6 @@ class _UsersScreenState extends State<UsersScreen> {
               Navigator.of(context).pop();
             }, child: Text("Cancel")),
             TextButton(onPressed: (){
-
-              deleteUser(id).then((
-    value) {
-    Navigator
-        .of(
-    context)
-        .pop();
-    EasyLoading
-        .showSuccess(
-    "User Deleted");
-    });
-    EasyLoading.show(status: 'Deleting..');
-    
-    
-
 
 
 

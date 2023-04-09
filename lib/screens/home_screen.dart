@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:web_admin/screens/report_screen.dart';
+import 'Admin_screen.dart';
 import 'manage_categories.dart';
 import 'requests_screen.dart';
 import 'dashboard_screen.dart';
@@ -88,6 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _selectedScreen = ReportScreen();
         });
+        break;
+      case AdminScreen.id:
+        setState(() {
+          _selectedScreen = AdminScreen();
+        });
+
 
     }
   }
@@ -137,6 +144,12 @@ class _HomeScreenState extends State<HomeScreen> {
             route: ReportScreen.id,
             icon: Icons.history_edu_outlined,
           ),
+          AdminMenuItem(
+            title: 'Admin',
+            route: AdminScreen.id,
+            icon: Icons.person_2,
+          ),
+
 
         ],
         selectedRoute: HomeScreen.id,
