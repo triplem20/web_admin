@@ -222,7 +222,7 @@ class _ReportScreenState extends State<ReportScreen> {
       elevation: 8,
       value: dropdownValue3,
       icon: const Icon(Icons.arrow_downward),
-      hint: Text('Select User ID'),
+      hint: Text('Select Category'),
       onChanged: (String? newValue3) {
         // This is called when the user selects an item.
         setState(() {

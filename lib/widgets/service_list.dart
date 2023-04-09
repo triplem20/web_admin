@@ -28,17 +28,30 @@ class _ServiceListState extends State<ServiceList> {
 
   dynamic dropdownValue;
   QuerySnapshot? querySnapshot;
+  dynamic dropdownValue3;
+  QuerySnapshot? querySnapshot3;
+
+
+  var stream;
+
+  int tag = 0;
+  List<String> options = [
+    "All Requests",
+    "Home Services",
+    "Office Service",
+    "Building Service",
+  ];
 
   @override
-  Widget _dropDownButton(String? val) {
+  Widget _dropDownButton() {
     return DropdownButton<String>(
-      value: val,
+      value: dropdownValue,
       icon: const Icon(Icons.arrow_downward,color: Colors.greenAccent,),
       hint: Text('Select Category'),
       onChanged: (String? newValue) {
         // This is called when the user selects an item
         setState(() {
-          val = newValue!;
+          dropdownValue = newValue!;
 
         });
       },
@@ -62,6 +75,7 @@ class _ServiceListState extends State<ServiceList> {
   @override
   void initState() {
     getCategoryList();
+    getCategory2List();
     // TODO: implement initState
     super.initState();
   }
@@ -87,7 +101,7 @@ class _ServiceListState extends State<ServiceList> {
               },
               child: Text("Cancel",style: TextStyle(color: Colors.white),)),
           TextButton(
-              style: ButtonStyle( backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
+              style: ButtonStyle( backgroundColor: MaterialStatePropertyAll(Colors.red),),
               onPressed: () {
                 deleteCategory(id);
                 Navigator.of(context).pop();
@@ -97,295 +111,352 @@ class _ServiceListState extends State<ServiceList> {
       ),
     );
   }
+
+  Widget _dropDownButton3() {
+    return DropdownButton<String>(
+      style: TextStyle(fontSize: 15),
+
+      elevation: 8,
+      value: dropdownValue3,
+      icon: const Icon(Icons.arrow_downward),
+      hint: Text('Select Category'),
+      onChanged: (String? newValue3) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue3 = newValue3!;
+          stream = _services.services.where('category', isEqualTo: dropdownValue3)
+              .snapshots();
+
+
+        });
+      },
+      items: querySnapshot3!.docs.map((e) {
+        return DropdownMenuItem<String>(
+          value: e['name'],
+          child: Text(e["name"]),
+        );
+      }).toList(),
+
+    );
+  }
+  getCategory2List(){
+    return _services.category.get().then((QuerySnapshot qs3) {
+      setState(() {
+        querySnapshot3 = qs3;
+      });
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: _services.services.snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
+    return Column(
+      children: [
+        Row(children: [
+          Text("Category : ",style: TextStyle(color: Colors.green),),
+          SizedBox(width: 3),
+          Container(
+              child: querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton3()),
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(color:Colors.greenAccent),
-            );
-          }
+        ],),
+        StreamBuilder<QuerySnapshot>(
+            stream:stream ??
+                FirebaseFirestore.instance
+                    .collection("services")
+                    .snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Something went wrong');
+              }
 
-          if (snapshot.data!.size == 0) {
-            return Center(child: Text("No Service Found"));
-          }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(color:Colors.greenAccent),
+                );
+              }
 
-          return GridView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 3,
-              crossAxisSpacing: 3,
-            ),
-            itemCount: snapshot.data!.size,
-            itemBuilder: (context, index) {
-              var data = snapshot.data!.docs[index];
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  leading: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        image:
-                            DecorationImage(image: NetworkImage(data['image'])),
-                        borderRadius: BorderRadius.circular(20),
-                      )),
-                  subtitle: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(data['title']),
-                          CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            child: IconButton(
-                              color: Colors.green,
-                                icon: Icon(Icons.edit),
-                                onPressed: () {
-                                  nameController.text =
-                                      snapshot.data!.docs[index]['title'];
-                                  infoController.text =
-                                      snapshot.data!.docs[index]['Description'];
-                                  priceController.text =
-                                      snapshot.data!.docs[index]['Price'];
-                                  imageUrlController.text =
-                                  snapshot.data!.docs[index]['image'];
+              if (snapshot.data!.size == 0) {
+                return Center(child: Text("No Service Found"));
+              }
+
+              return GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 7/2,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 1,
+                  crossAxisSpacing: 1,
+                ),
+                itemCount: snapshot.data!.size,
+                itemBuilder: (context, index) {
+                  var data = snapshot.data!.docs[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      leading: Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            image:
+                                DecorationImage(image: NetworkImage(data['image'])),
+                            borderRadius: BorderRadius.circular(20),
+                          )),
+                      subtitle: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Text(data['title']),
+                              CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: IconButton(
+                                  color: Colors.green,
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
+                                    dropdownValue =snapshot.data!.docs[index]['category'];
+                                      nameController.text =
+                                          snapshot.data!.docs[index]['title'];
+                                      infoController.text =
+                                          snapshot.data!.docs[index]['Description'];
+                                      priceController.text =
+                                          snapshot.data!.docs[index]['Price'];
+                                      imageUrlController.text =
+                                      snapshot.data!.docs[index]['image'];
 
 
-                                  showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (context) => Dialog(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: ListView(
-                                                shrinkWrap: true,
-                                                children: <Widget>[
-                                                  Form(
-                                                    key: _formkey,
-                                                    child: Center(
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "Update Service :",
-                                                            style: TextStyle(
-                                                                color: Colors.green,
-                                                                fontSize: 20),
-                                                          ),
-                                                          querySnapshot == null
-                                                              ? CircularProgressIndicator(
-                                                                  color: Colors
-                                                                      .greenAccent)
-                                                              : _dropDownButton(snapshot.data!.docs[index]['category']),
-                                                          Row(
+                                      showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (context) => Dialog(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: ListView(
+                                                    shrinkWrap: true,
+                                                    children: <Widget>[
+                                                      Form(
+                                                        key: _formkey,
+                                                        child: Center(
+                                                          child: Column(
                                                             crossAxisAlignment: CrossAxisAlignment.start,
-                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
-                                                              Padding(
-                                                                padding: const EdgeInsets.all(10.0),
-                                                                child: Column(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    Container(
-                                                                      width: 200,
-                                                                      height: 100,
-                                                                      child:
-                                                                          TextFormField(
-                                                                        controller: nameController,
-                                                                        validator: (value) {
-                                                                          if (value!.isEmpty) {
-                                                                            return "Enter The Service Name";
-                                                                          }
-                                                                          return null;
-                                                                        },
-                                                                        decoration:
-                                                                            InputDecoration(
-                                                                          label: Text("Service Name"),
-                                                                          contentPadding: EdgeInsets.zero,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(height: 10),
-                                                                    Container(
-                                                                      width: 200,
-                                                                      height: 100,
-                                                                      child:
-                                                                          TextFormField(
-                                                                        controller: infoController,
-                                                                        maxLines: 5,
-                                                                        minLines: 1,
-                                                                        keyboardType:
-                                                                            TextInputType.multiline,
-                                                                        validator: (value) {
-                                                                          if (value!.isEmpty) {
-                                                                            return "Enter The Service Description";
-                                                                          }
-                                                                          return null;
-                                                                        },
-                                                                        decoration: InputDecoration(
-                                                                          label: Text(" Service Description"),
-                                                                          contentPadding: EdgeInsets.zero,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(height: 10),
-                                                                    Container(
-                                                                      width: 200,
-                                                                      height: 100,
-                                                                      child:
-                                                                          TextFormField(
-                                                                        controller: priceController,
-                                                                        keyboardType: TextInputType.number,
-                                                                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                                                                        validator: (value) {
-                                                                          if (value!.isEmpty) {
-                                                                            return "Enter The Service Price";
-                                                                          }
-                                                                          return null;
-                                                                        },
-                                                                        onChanged: (value) {
-                                                                          double.parse(
-                                                                              value);
-                                                                        },
-                                                                        decoration: InputDecoration(
-                                                                          label: Text(" Service Price SDG"),
-                                                                          contentPadding: EdgeInsets.zero,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      width: 200,
-                                                                      height: 100,
-                                                                      child:
-                                                                          TextFormField(
-                                                                        controller: imageUrlController,
-                                                                        validator: (value) {
-                                                                          if (value!.isEmpty) {
-                                                                            return "Enter Image URL";
-                                                                          }
-                                                                          return null;
-                                                                        },
-                                                                        decoration: InputDecoration(
-                                                                          label: Text("Image URL"),
-                                                                          contentPadding: EdgeInsets.zero,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                          SizedBox(height: 10),
-                                                          Row(
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              TextButton(
-                                                                onPressed: () {
-
-                                                                 if (_formkey
-                                                                     .currentState!
-                                                                     .validate()) {
-                                                                   snapshot
-                                                                       .data!
-                                                                       .docs[index]
-                                                                       .reference
-                                                                       .update({
-
-                                                                     'title': nameController.text,
-                                                                     'category': dropdownValue,
-                                                                     'Description': infoController.text,
-                                                                     'Price': priceController.text,
-
-
-                                                                   })
-                                                                       .then((
-                                                                       value) {
-                                                                     Navigator
-                                                                         .of(
-                                                                         context)
-                                                                         .pop();
-                                                                     EasyLoading
-                                                                         .showSuccess(
-                                                                         "Category Updated");
-                                                                   });
-                                                                 }
-
-                                                                    EasyLoading.show(status: 'Updating..');
-
-                                                                   },
-                                                                child: Text("Update",
-                                                                    style: TextStyle(
-                                                                        color: Colors.white,
-                                                                        fontWeight: FontWeight.bold)),
-                                                                style: ButtonStyle(
-                                                                  backgroundColor:
-                                                                      MaterialStatePropertyAll(Colors.greenAccent),
-                                                                ),
+                                                              Text(
+                                                                "Update Service :",
+                                                                style: TextStyle(
+                                                                    color: Colors.green,
+                                                                    fontSize: 20),
                                                               ),
-                                                              const SizedBox(
-                                                                  width: 5),
-                                                              TextButton(
-                                                                  onPressed: () {
-                                                                    Navigator.of(context).pop();
-                                                                  },
-                                                                  child: Text(
-                                                                      "Cancel",
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .bold)),
-                                                                  style:
-                                                                      ButtonStyle(
-                                                                    backgroundColor:
-                                                                        MaterialStatePropertyAll(
-                                                                            Colors
-                                                                                .greenAccent),
-                                                                  )),
+                                                              querySnapshot == null
+                                                                  ? CircularProgressIndicator(
+                                                                      color: Colors
+                                                                          .greenAccent)
+                                                                  : _dropDownButton(),
+                                                              Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.all(10.0),
+                                                                    child: Column(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      children: [
+                                                                        Container(
+                                                                          width: 200,
+                                                                          height: 100,
+                                                                          child:
+                                                                              TextFormField(
+                                                                            controller: nameController,
+                                                                            validator: (value) {
+                                                                              if (value!.isEmpty) {
+                                                                                return "Enter The Service Name";
+                                                                              }
+                                                                              return null;
+                                                                            },
+                                                                            decoration:
+                                                                                InputDecoration(
+                                                                              label: Text("Service Name"),
+                                                                              contentPadding: EdgeInsets.zero,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(height: 10),
+                                                                        Container(
+                                                                          width: 200,
+                                                                          height: 100,
+                                                                          child:
+                                                                              TextFormField(
+                                                                            controller: infoController,
+                                                                            maxLines: 7,
+                                                                            minLines: 1,
+                                                                            keyboardType:
+                                                                                TextInputType.multiline,
+                                                                            validator: (value) {
+                                                                              if (value!.isEmpty) {
+                                                                                return "Enter The Service Description";
+                                                                              }
+                                                                              return null;
+                                                                            },
+                                                                            decoration: InputDecoration(
+                                                                              label: Text(" Service Description"),
+                                                                              contentPadding: EdgeInsets.zero,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(height: 10),
+                                                                        Container(
+                                                                          width: 200,
+                                                                          height: 100,
+                                                                          child:
+                                                                              TextFormField(
+                                                                            controller: priceController,
+                                                                            keyboardType: TextInputType.number,
+                                                                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                                                                            validator: (value) {
+                                                                              if (value!.isEmpty) {
+                                                                                return "Enter The Service Price";
+                                                                              }
+                                                                              return null;
+                                                                            },
+                                                                            onChanged: (value) {
+                                                                              double.parse(
+                                                                                  value);
+                                                                            },
+                                                                            decoration: InputDecoration(
+                                                                              label: Text(" Service Price SDG"),
+                                                                              contentPadding: EdgeInsets.zero,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                          width: 200,
+                                                                          height: 100,
+                                                                          child:
+                                                                              TextFormField(
+                                                                            controller: imageUrlController,
+                                                                            validator: (value) {
+                                                                              if (value!.isEmpty) {
+                                                                                return "Enter Image URL";
+                                                                              }
+                                                                              return null;
+                                                                            },
+                                                                            decoration: InputDecoration(
+                                                                              label: Text("Image URL"),
+                                                                              contentPadding: EdgeInsets.zero,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              SizedBox(height: 10),
+                                                              Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                children: [
+                                                                  TextButton(
+                                                                    onPressed: () {
+
+        if(dropdownValue != null) {
+          if (_formkey
+              .currentState!
+              .validate()) {
+            snapshot
+                .data!
+                .docs[index]
+                .reference
+                .update({
+
+
+              'title': nameController.text,
+              'category': dropdownValue,
+              'Description': infoController.text,
+              'Price': priceController.text,
+              'image':imageUrlController.text,
+
+
+            })
+                .then((value) {
+              Navigator
+                  .of(
+                  context)
+                  .pop();
+              EasyLoading
+                  .showSuccess(
+                  "Category Updated");
+            });
+          }
+
+
+          EasyLoading.show(status: 'Updating..');
+        }
+                                                                       },
+                                                                    child: Text("Update",
+                                                                        style: TextStyle(
+                                                                            color: Colors.white,
+                                                                            fontWeight: FontWeight.bold)),
+                                                                    style: ButtonStyle(
+                                                                      backgroundColor:
+                                                                          MaterialStatePropertyAll(Colors.greenAccent),
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                      width: 5),
+                                                                  TextButton(
+                                                                      onPressed: () {
+                                                                        Navigator.of(context).pop();
+                                                                      },
+                                                                      child: Text(
+                                                                          "Cancel",
+                                                                          style: TextStyle(
+                                                                              color: Colors
+                                                                                  .white,
+                                                                              fontWeight:
+                                                                                  FontWeight
+                                                                                      .bold)),
+                                                                      style:
+                                                                          ButtonStyle(
+                                                                        backgroundColor:
+                                                                            MaterialStatePropertyAll(
+                                                                                Colors
+                                                                                    .greenAccent),
+                                                                      )),
+                                                                ],
+                                                              ),
                                                             ],
                                                           ),
-                                                        ],
+                                                        ),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          ));
-                                }),
+                                                ),
+                                              ));
+                                    }),
+                              ),
+                              CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: IconButton(
+                                  color: Colors.green,
+                                  onPressed: () {
+                                    _showAlertDialog(context, "Delete Service ",
+                                        "Are You Sure ?", data.id);
+                                  },
+                                  icon: Icon(Icons.delete),
+                                ),
+                              ),
+                            ],
                           ),
-                          CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            child: IconButton(
-                              color: Colors.green,
-                              onPressed: () {
-                                _showAlertDialog(context, "Delete Service ",
-                                    "Are You Sure ?", data.id);
-                              },
-                              icon: Icon(Icons.delete),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               );
-            },
-          );
-        });
+            }),
+      ],
+    );
   }
 }
