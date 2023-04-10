@@ -257,7 +257,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                           style: ButtonStyle(
                                             backgroundColor: MaterialStatePropertyAll(Colors.green),
                                           ),),
-                                        SizedBox(width: 6),
+                                        SizedBox(width: 5),
                                         AbsorbPointer(
                                           absorbing:  snapshot.data!.docs[index]['status']== 'Rejected'
                                               ?true
@@ -316,7 +316,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                               )),
                                               style: ButtonStyle(
                                                 backgroundColor: MaterialStatePropertyAll( snapshot.data!.docs[index]['status']== 'Rejected'
-                                                    ?Colors.grey :Colors.red),)),
+                                                    ?Colors.white70 :Colors.red),)),
                                         ),
                                       ],
                                     ),

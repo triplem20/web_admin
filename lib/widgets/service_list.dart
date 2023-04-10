@@ -45,16 +45,19 @@ class _ServiceListState extends State<ServiceList> {
   @override
   Widget _dropDownButton() {
     return DropdownButton<String>(
-      value: dropdownValue,
+
       icon: const Icon(Icons.arrow_downward,color: Colors.greenAccent,),
       hint: Text('Select Category'),
       onChanged: (String? newValue) {
+        dropdownValue = newValue!;
         // This is called when the user selects an item
         setState(() {
-          dropdownValue = newValue!;
+          dropdownValue;
+
 
         });
       },
+      value: dropdownValue,
       items: querySnapshot!.docs.map((e) {
         return DropdownMenuItem<String>(
           value: e['name'],
@@ -121,6 +124,7 @@ class _ServiceListState extends State<ServiceList> {
       icon: const Icon(Icons.arrow_downward),
       hint: Text('Select Category'),
       onChanged: (String? newValue3) {
+
         // This is called when the user selects an item.
         setState(() {
           dropdownValue3 = newValue3!;
@@ -289,7 +293,7 @@ class _ServiceListState extends State<ServiceList> {
                                                                           child:
                                                                               TextFormField(
                                                                             controller: infoController,
-                                                                            maxLines: 7,
+                                                                            maxLines: 9,
                                                                             minLines: 1,
                                                                             keyboardType:
                                                                                 TextInputType.multiline,
@@ -301,7 +305,7 @@ class _ServiceListState extends State<ServiceList> {
                                                                             },
                                                                             decoration: InputDecoration(
                                                                               label: Text(" Service Description"),
-                                                                              contentPadding: EdgeInsets.zero,
+                                                                              contentPadding: EdgeInsets.all(5),
                                                                             ),
                                                                           ),
                                                                         ),

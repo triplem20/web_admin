@@ -162,7 +162,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
                           },
                           decoration: InputDecoration(
                             label: Text("Enter Service Description"),
-                            contentPadding:EdgeInsets.zero,
+                            contentPadding:EdgeInsets.all(5),
                           ),
                         ),
                       ),
