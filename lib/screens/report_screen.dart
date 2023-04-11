@@ -351,12 +351,12 @@ class _ReportScreenState extends State<ReportScreen> {
                     Text("Service : ",style: TextStyle(color: Colors.green),),
                     SizedBox(width: 3),
                     Container(
-                        child: querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton2()),
+                        child: querySnapshot2 == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton2()),
                     SizedBox(width: 10),
                     Text("Category : ",style: TextStyle(color: Colors.green),),
                     SizedBox(width: 3),
                     Container(
-                        child: querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton3()),
+                        child: querySnapshot3 == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton3()),
 
                   ],
                 ),
@@ -472,7 +472,7 @@ class _ReportScreenState extends State<ReportScreen> {
                                 Container(
                                   width: 100,
                                   child: Text(
-                                      'on ${data.docs[index]['date'].toString()}'),
+                                      '${data.docs[index]['date'].toString()}'),
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
