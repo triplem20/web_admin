@@ -38,14 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Center(child: Text(title),),
         content: Text(message),
         actions: <Widget>[
-          TextButton(
+          ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
+              backgroundColor: MaterialStatePropertyAll(Colors.white),
             ),onPressed: (){
 
             Navigator.of(context).pop();
-          }, child: Text("Cancel", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),),
-          TextButton(
+          }, child: Text("Cancel", style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.bold)),),
+          ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
             ),

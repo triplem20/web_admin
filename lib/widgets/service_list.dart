@@ -97,13 +97,13 @@ class _ServiceListState extends State<ServiceList> {
         ),
         content: Text(message),
         actions: <Widget>[
-          TextButton(
-            style: ButtonStyle( backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
+          ElevatedButton(
+            style: ButtonStyle( backgroundColor: MaterialStatePropertyAll(Colors.white),),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel",style: TextStyle(color: Colors.white),)),
-          TextButton(
+              child: Text("Cancel",style: TextStyle(color: Colors.greenAccent),)),
+          ElevatedButton(
               style: ButtonStyle( backgroundColor: MaterialStatePropertyAll(Colors.red),),
               onPressed: () {
                 deleteCategory(id);
@@ -361,7 +361,7 @@ class _ServiceListState extends State<ServiceList> {
                                                               Row(
                                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                                 children: [
-                                                                  TextButton(
+                                                                  ElevatedButton(
                                                                     onPressed: () {
 
         if(dropdownValue != null) {
@@ -409,7 +409,7 @@ class _ServiceListState extends State<ServiceList> {
                                                                   ),
                                                                   const SizedBox(
                                                                       width: 5),
-                                                                  TextButton(
+                                                                  ElevatedButton(
                                                                       onPressed: () {
                                                                         Navigator.of(context).pop();
                                                                       },
@@ -417,7 +417,7 @@ class _ServiceListState extends State<ServiceList> {
                                                                           "Cancel",
                                                                           style: TextStyle(
                                                                               color: Colors
-                                                                                  .white,
+                                                                                  .greenAccent,
                                                                               fontWeight:
                                                                                   FontWeight
                                                                                       .bold)),
@@ -426,7 +426,7 @@ class _ServiceListState extends State<ServiceList> {
                                                                         backgroundColor:
                                                                             MaterialStatePropertyAll(
                                                                                 Colors
-                                                                                    .greenAccent),
+                                                                                    .white),
                                                                       )),
                                                                 ],
                                                               ),

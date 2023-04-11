@@ -105,7 +105,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
               ),
 
               Container(
-                width: 100,
+                width: 200,
                 child: Text('              '),
               ),
             ],
@@ -188,140 +188,151 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
 
                                   Container(
+                                    width: 200,
                                     child:
                                     snapshot.data!.docs[index]['status']== 'Accepted'?
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white38,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-
-                                        width: 120,
-                                        child:Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Text("Accepted",style: TextStyle(color:Colors.green,fontWeight: FontWeight.bold),),
-                                        )
-                                    ) :Row(
-                                      children: [
-                                        TextButton(onPressed: () {
-                                            showCupertinoDialog(
-                                                context: context,
-                                                barrierDismissible: false,
-                                                builder: (BuildContext context) => AlertDialog(
-                                                  title: Center(
-                                                    child: Text("Accept Request",),),
-                                                  content: Text("Are You Sure?",),
-                                                  actions: [
-                                                    TextButton(
-                                                        style: ButtonStyle(
-                                                          backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
-                                                        onPressed: (){
-                                                      Navigator.of(context).pop();
-
-                                                    }, child: Text("Cancel",
-                                                style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
-                                                    TextButton(
-                                                    style: ButtonStyle(
-                                                    backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),onPressed: (){
-                                                      snapshot
-                                                          .data!
-                                                          .docs[index]
-                                                          .reference
-                                                          .update({
-
-                                                        'status': "Accepted",
-
-
-                                                      })
-                                                          .then((
-                                                          value) {
-                                                        Navigator
-                                                            .of(
-                                                            context)
-                                                            .pop();
-                                                        EasyLoading
-                                                            .showSuccess(
-                                                            "Request Accepted");
-                                                      });
-
-
-
-                                                    },
-                                                        child: Text("Ok",style: TextStyle(color:Colors.white),)),
-                                                  ],
-                                                )
-                                            );
-                                  },
-                                          child: Text("Accept",
-                                              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
-                                          style: ButtonStyle(
-                                            backgroundColor: MaterialStatePropertyAll(Colors.green),
-                                          ),),
-                                        SizedBox(width: 5),
-                                        AbsorbPointer(
-                                          absorbing:  snapshot.data!.docs[index]['status']== 'Rejected'
-                                              ?true
-                                          :false,
-                                          child: TextButton(onPressed: (){
-                                            showCupertinoDialog(
-                                                context: context,
-                                                barrierDismissible: false,
-                                                builder: (BuildContext context) => AlertDialog(
-                                                  title: Center(
-                                                    child: Text("Reject Request"),),
-                                                  content:Text("Are You Sure?"),
-                                                  actions: [
-                                                    TextButton(
-                                                style: ButtonStyle(
-                                                backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
-                                                        onPressed: (){
-                                                      Navigator.of(context).pop();
-
-                                                    }, child: Text("Cancel", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
-                                                    TextButton(
-                                                        style: ButtonStyle(
-                                                          backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
-                                                        onPressed: (){
-                                                      snapshot
-                                                          .data!
-                                                          .docs[index]
-                                                          .reference
-                                                          .update({
-
-                                                        'status': "Rejected",
-
-
-                                                      })
-                                                          .then((
-                                                          value) {
-                                                        Navigator
-                                                            .of(
-                                                            context)
-                                                            .pop();
-                                                        EasyLoading
-                                                            .showSuccess(
-                                                            "Request Rejected");
-                                                      });
-                                                    },
-                                                        child: Text("Ok",  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
-                                                  ],
-                                                )
-                                            );
-
-
-
-                                          }, child: Text( snapshot.data!.docs[index]['status']== 'Rejected'? "Rejected" : "Reject",
-                                              style: TextStyle(fontWeight: FontWeight.bold,
-                                                  color:snapshot.data!.docs[index]['status']== 'Rejected'? Colors.red :Colors.white
-                                              )),
-                                              style: ButtonStyle(
-                                                backgroundColor: MaterialStatePropertyAll( snapshot.data!.docs[index]['status']== 'Rejected'
-                                                    ?Colors.white70 :Colors.red),)),
+                                    Center(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white38,
+                                          borderRadius: BorderRadius.circular(5),
                                         ),
-                                      ],
+
+                                          child:Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Text("Accepted",style: TextStyle(color:Colors.green,fontWeight: FontWeight.bold),),
+                                          )
+                                      ),
+                                    ) :Container(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            ElevatedButton(onPressed: () {
+                                                showCupertinoDialog(
+                                                    context: context,
+                                                    barrierDismissible: false,
+                                                    builder: (BuildContext context) => AlertDialog(
+                                                      title: Center(
+                                                        child: Text("Accept Request",),),
+                                                      content: Text("Are You Sure?",),
+                                                      actions: [
+                                                        ElevatedButton(
+                                                            style: ButtonStyle(
+                                                              backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
+                                                            onPressed: (){
+                                                          Navigator.of(context).pop();
+
+                                                          }, child: Text("Cancel",
+                                                      style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.bold))),
+                                                          ElevatedButton(
+                                                          style: ButtonStyle(
+                                                          backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),onPressed: (){
+                                                            snapshot
+                                                                .data!
+                                                                .docs[index]
+                                                                .reference
+                                                                .update({
+
+                                                              'status': "Accepted",
+
+
+                                                            })
+                                                                .then((
+                                                                value) {
+                                                              Navigator
+                                                                  .of(
+                                                                  context)
+                                                                  .pop();
+                                                              EasyLoading
+                                                                  .showSuccess(
+                                                                  "Request Accepted");
+                                                            });
+
+
+
+                                                          },
+                                                              child: Text("Ok",style: TextStyle(color:Colors.white),)),
+                                                        ],
+                                                      )
+                                                  );
+                                  },
+                                                child: Text("  Accept  ",
+                                                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+                                                style: ButtonStyle(
+                                                  backgroundColor: MaterialStatePropertyAll(Colors.green),
+                                                ),),
+                                              SizedBox(width:3),
+
+                                              AbsorbPointer(
+                                                absorbing:  snapshot.data!.docs[index]['status']== 'Rejected'
+                                                    ?true
+                                                :false,
+                                                child: ElevatedButton(onPressed: (){
+                                                  showCupertinoDialog(
+                                                      context: context,
+                                                      barrierDismissible: false,
+                                                      builder: (BuildContext context) => AlertDialog(
+                                                        title: Center(
+                                                          child: Text("Reject Request"),),
+                                                        content:Text("Are You Sure?"),
+                                                        actions: [
+                                                          ElevatedButton(
+                                                      style: ButtonStyle(
+                                                      backgroundColor: MaterialStatePropertyAll(Colors.white),),
+                                                              onPressed: (){
+                                                            Navigator.of(context).pop();
+
+                                                          }, child: Text("Cancel", style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.bold))),
+                                                          ElevatedButton(
+                                                              style: ButtonStyle(
+                                                                backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
+                                                              onPressed: (){
+                                                            snapshot
+                                                                .data!
+                                                                .docs[index]
+                                                                .reference
+                                                                .update({
+
+                                                              'status': "Rejected",
+
+
+                                                            })
+                                                                .then((
+                                                                value) {
+                                                              Navigator
+                                                                  .of(
+                                                                  context)
+                                                                  .pop();
+                                                              EasyLoading
+                                                                  .showSuccess(
+                                                                  "Request Rejected");
+                                                            });
+                                                          },
+                                                              child: Text("Ok",  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
+                                                        ],
+                                                      )
+                                                  );
+
+
+
+                                                }, child: Text( snapshot.data!.docs[index]['status']== 'Rejected'? "Rejected" : "  Reject  ",
+                                                    style: TextStyle(fontWeight: FontWeight.bold,
+                                                        color:snapshot.data!.docs[index]['status']== 'Rejected'? Colors.red :Colors.white
+                                                    )),
+                                                    style: ButtonStyle(
+                                                      backgroundColor: MaterialStatePropertyAll( snapshot.data!.docs[index]['status']== 'Rejected'
+                                                          ?Colors.white70 :Colors.red),)),
+                                              ),
+                                            ],
+                                          ),
+                                      ),
+                                    ),
                                     ),
 
-                                  ) ,
+
               ]),
                               Divider(thickness: 3,color:Colors.grey),
                             ],

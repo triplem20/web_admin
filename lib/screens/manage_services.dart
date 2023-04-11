@@ -223,7 +223,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TextButton(onPressed: (){
+                ElevatedButton(onPressed: (){
                   if(dropdownValue != null){
                     if(_formkey.currentState!.validate()){
                       EasyLoading.show(status: 'Saving..');
@@ -242,13 +242,13 @@ class _ServiceScreenState extends State<ServiceScreen> {
                     backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
                   ),),
                 const SizedBox(width: 5),
-                TextButton(onPressed: (){
+                ElevatedButton(onPressed: (){
                   EasyLoading.dismiss();
                   clean();
                 }, child: Text("Cancel",
-                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+                    style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.bold)),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),)),
+                      backgroundColor: MaterialStatePropertyAll(Colors.white),)),
               ],
             ),
             SizedBox(height: 10),
