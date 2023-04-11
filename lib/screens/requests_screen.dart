@@ -221,7 +221,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                                       actions: [
                                                         ElevatedButton(
                                                             style: ButtonStyle(
-                                                              backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),),
+                                                              backgroundColor: MaterialStatePropertyAll(Colors.white),),
                                                             onPressed: (){
                                                           Navigator.of(context).pop();
 
@@ -254,7 +254,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
 
                                                           },
-                                                              child: Text("Ok",style: TextStyle(color:Colors.white),)),
+                                                              child: Text("Accept",style: TextStyle(color:Colors.white),)),
                                                         ],
                                                       )
                                                   );
@@ -311,7 +311,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                                                   "Request Rejected");
                                                             });
                                                           },
-                                                              child: Text("Ok",  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
+                                                              child: Text("Reject",  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
                                                         ],
                                                       )
                                                   );

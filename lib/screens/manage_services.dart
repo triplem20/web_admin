@@ -223,6 +223,15 @@ class _ServiceScreenState extends State<ServiceScreen> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+
+                ElevatedButton(onPressed: (){
+                  EasyLoading.dismiss();
+                  clean();
+                }, child: Text("Cancel",
+                    style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.bold)),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.white),)),
+                const SizedBox(width: 5),
                 ElevatedButton(onPressed: (){
                   if(dropdownValue != null){
                     if(_formkey.currentState!.validate()){
@@ -241,14 +250,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.greenAccent),
                   ),),
-                const SizedBox(width: 5),
-                ElevatedButton(onPressed: (){
-                  EasyLoading.dismiss();
-                  clean();
-                }, child: Text("Cancel",
-                    style: TextStyle(color: Colors.greenAccent,fontWeight: FontWeight.bold)),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.white),)),
               ],
             ),
             SizedBox(height: 10),

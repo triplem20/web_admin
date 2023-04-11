@@ -361,54 +361,8 @@ class _ServiceListState extends State<ServiceList> {
                                                               Row(
                                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                                 children: [
-                                                                  ElevatedButton(
-                                                                    onPressed: () {
-
-        if(dropdownValue != null) {
-          if (_formkey
-              .currentState!
-              .validate()) {
-            snapshot
-                .data!
-                .docs[index]
-                .reference
-                .update({
 
 
-              'title': nameController.text,
-              'category': dropdownValue,
-              'Description': infoController.text,
-              'Price': priceController.text,
-              'image':imageUrlController.text,
-
-
-            })
-                .then((value) {
-              Navigator
-                  .of(
-                  context)
-                  .pop();
-              EasyLoading
-                  .showSuccess(
-                  "Category Updated");
-            });
-          }
-
-
-          EasyLoading.show(status: 'Updating..');
-        }
-                                                                       },
-                                                                    child: Text("Update",
-                                                                        style: TextStyle(
-                                                                            color: Colors.white,
-                                                                            fontWeight: FontWeight.bold)),
-                                                                    style: ButtonStyle(
-                                                                      backgroundColor:
-                                                                          MaterialStatePropertyAll(Colors.greenAccent),
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                      width: 5),
                                                                   ElevatedButton(
                                                                       onPressed: () {
                                                                         Navigator.of(context).pop();
@@ -428,6 +382,54 @@ class _ServiceListState extends State<ServiceList> {
                                                                                 Colors
                                                                                     .white),
                                                                       )),
+                                                                  const SizedBox(
+                                                                      width: 5),
+                                                                  ElevatedButton(
+                                                                    onPressed: () {
+
+                                                                      if(dropdownValue != null) {
+                                                                        if (_formkey
+                                                                            .currentState!
+                                                                            .validate()) {
+                                                                          snapshot
+                                                                              .data!
+                                                                              .docs[index]
+                                                                              .reference
+                                                                              .update({
+
+
+                                                                            'title': nameController.text,
+                                                                            'category': dropdownValue,
+                                                                            'Description': infoController.text,
+                                                                            'Price': priceController.text,
+                                                                            'image':imageUrlController.text,
+
+
+                                                                          })
+                                                                              .then((value) {
+                                                                            Navigator
+                                                                                .of(
+                                                                                context)
+                                                                                .pop();
+                                                                            EasyLoading
+                                                                                .showSuccess(
+                                                                                "Category Updated");
+                                                                          });
+                                                                        }
+
+
+                                                                        EasyLoading.show(status: 'Updating..');
+                                                                      }
+                                                                    },
+                                                                    child: Text("Update",
+                                                                        style: TextStyle(
+                                                                            color: Colors.white,
+                                                                            fontWeight: FontWeight.bold)),
+                                                                    style: ButtonStyle(
+                                                                      backgroundColor:
+                                                                      MaterialStatePropertyAll(Colors.greenAccent),
+                                                                    ),
+                                                                  ),
                                                                 ],
                                                               ),
                                                             ],
