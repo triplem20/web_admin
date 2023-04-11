@@ -113,7 +113,7 @@ class _ReportScreenState extends State<ReportScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
-        insetPadding: EdgeInsets.symmetric(vertical:100,horizontal: 40),
+        insetPadding: EdgeInsets.symmetric(vertical:150,horizontal: 40),
         title: Center(
          child: Text("Select Dates"),
         ),
