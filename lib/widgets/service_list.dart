@@ -45,19 +45,20 @@ class _ServiceListState extends State<ServiceList> {
   @override
   Widget _dropDownButton() {
     return DropdownButton<String>(
-
+      value: dropdownValue,
       icon: const Icon(Icons.arrow_downward,color: Colors.greenAccent,),
       hint: Text('Select Category'),
       onChanged: (String? newValue) {
-        dropdownValue = newValue!;
+
         // This is called when the user selects an item
         setState(() {
-          dropdownValue;
+          dropdownValue = newValue!;
+
 
 
         });
       },
-      value: dropdownValue,
+
       items: querySnapshot!.docs.map((e) {
         return DropdownMenuItem<String>(
           value: e['name'],
