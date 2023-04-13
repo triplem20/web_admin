@@ -55,7 +55,7 @@ class DashScreen extends StatelessWidget {
         children: [
           const SizedBox(width:10),
         StreamBuilder<QuerySnapshot>(
-        stream: _services.users.snapshots(),
+        stream: _services.users.where('role',isEqualTo: "user").snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');

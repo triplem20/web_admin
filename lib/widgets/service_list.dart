@@ -93,6 +93,7 @@ class _ServiceListState extends State<ServiceList> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
+        insetPadding: EdgeInsets.symmetric(vertical:100,horizontal: 100),
         title: Center(
           child: Text(title),
         ),

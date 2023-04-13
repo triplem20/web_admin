@@ -51,6 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             onPressed: (){
               _auth.signOut();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                  builder: (context) =>  LoginScreen(),
+              ),
+              );
 
           }, child: Text("Log Out", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),),
 

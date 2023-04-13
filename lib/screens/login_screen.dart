@@ -1,21 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'home_screen.dart';
 
 
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String id ="Login-screen";
- final _forekey =GlobalKey<FormState>();
-  String adminEmail = " ";
-  String adminPassword = " ";
-  var emailCNTL = TextEditingController(text:"admin@gmail.com");
-  var passCNTL = TextEditingController(text:"123456");
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+ final _formkey =GlobalKey<FormState>();
+
+  bool _isObscure3 = true;
+
+  bool visible = false;
+
+
+  var emailCNTL = TextEditingController();
+
+  var passCNTL = TextEditingController();
+
+  final _auth = FirebaseAuth.instance;
+  
+
 
   @override
   Widget build(BuildContext context) {
       return Form(
-        key:_forekey,
+        key:_formkey,
         child:Scaffold(
           backgroundColor: Colors.black,
           body:Center(
@@ -28,96 +44,112 @@ class LoginScreen extends StatelessWidget {
                     height: 300,
                     width: 300,
                     decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage('assets/images/splash.png')),
-                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: 5,color: Colors.greenAccent),
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(image:NetworkImage('assets/images/admin2.png'),),
+
                     ),
                   ),
                   const SizedBox(height: 20),
 
-                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        onChanged: (value) {
-                          adminEmail = value;
-
-                        },
-                        obscureText: false,
-                        controller: emailCNTL,
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value){
-                          if(value!.isEmpty) {
-                            return "Enter Your Email Address ";
-                          }
-                          return null;
-                        },
-                        style: const TextStyle(fontSize: 16, color: Colors.white),
-                        decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.greenAccent,
-                                  width: 2,
-                                )),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.pinkAccent,
-                                  width: 2,
-                                )),
-                            hintText: "Email",
-
-                            hintStyle: TextStyle(color: Colors.grey),
-                            icon: Icon(
-                              Icons.email,
-                              color: Colors.greenAccent,
-                            )),
+                  TextFormField(
+                    controller:emailCNTL,
+                    decoration: InputDecoration(
+                      label:  Text("Email Address",style: TextStyle(color: Colors.greenAccent),),
+                      prefixIcon: Icon(Icons.email,color: Colors.greenAccent,),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'admin@gmail.com',
+                      enabled: true,
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, bottom: 8.0, top: 8.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.greenAccent,width: 4),
+                        borderRadius: new BorderRadius.circular(10),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.white),
+                        borderRadius: new BorderRadius.circular(10),
                       ),
                     ),
-
-
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      onChanged: (value) {
-
-                        adminPassword =value;
-
-                      },
-                      obscureText: true,
-                      controller: passCNTL,
-                      validator: (value){
-                        if(value!.isEmpty) {
-                          return "Enter Your Password ";
-                        }
+                    validator: (value) {
+                      if (value!.length == 0) {
+                        return "Email cannot be empty";
+                      }
+                      if (!RegExp(
+                          "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                          .hasMatch(value)) {
+                        return ("Please enter a valid email");
+                      } else {
                         return null;
-                      },
-
-                      style: const TextStyle(fontSize: 16, color: Colors.white),
-
-                      decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.greenAccent,
-                                width: 2,
-                              )),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.pinkAccent,
-                                width: 2,
-                              )),
-                          hintText: "Password",
-                          hintStyle: TextStyle(color: Colors.grey),
-                          icon: Icon(
-                            Icons.admin_panel_settings,
-                            color: Colors.greenAccent,
-                          )),
-                    ),
+                      }
+                    },
+                    onSaved: (value) {
+                      emailCNTL.text = value!;
+                    },
+                    keyboardType: TextInputType.emailAddress,
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: passCNTL,
+                    obscureText: _isObscure3,
+                    decoration: InputDecoration(
+                     label: Text("Password",style: TextStyle(color: Colors.greenAccent),),
+                      prefixIcon: Icon(Icons.lock,color: Colors.greenAccent,),
+                      suffixIcon: IconButton(
+                          icon: Icon(_isObscure3
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure3 = !_isObscure3;
+                            });
+                          }),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabled: true,
+                      contentPadding: const EdgeInsets.only(
+                          left: 14.0, bottom: 8.0, top: 8.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.greenAccent,width: 4),
+                        borderRadius: new BorderRadius.circular(10),
+                      ),
+                      hintText: "*********",
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.white),
+                        borderRadius: new BorderRadius.circular(10),
+                      ),
+                    ),
+                    validator: (value) {
+                      RegExp regex = new RegExp(r'^.{6,}$');
+                      if (value!.isEmpty) {
+                        return "Password cannot be empty";
+                      }
+                      if (!regex.hasMatch(value)) {
+                        return ("please enter valid password min. 6 character");
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (value) {
+                      passCNTL.text = value!;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                         onPressed: () {
-                          if(_forekey.currentState!.validate()){
-                            Navigator.pushNamed(context, HomeScreen.id);
-                          }
+
+    setState(() {
+    visible = true;
+    });
+    signIn(
+    emailCNTL.text, passCNTL.text);
+
 
 
                         },
@@ -137,8 +169,10 @@ class LoginScreen extends StatelessWidget {
                             letterSpacing: 2,
                             fontSize: 16,
                           ),
-                        )),
+                        )
+                    ),
                   ),
+
                 ],
               ),
             ),
@@ -146,4 +180,53 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+ void route() {
+   User? user = FirebaseAuth.instance.currentUser;
+   var kk = FirebaseFirestore.instance
+       .collection('users')
+       .where('uid',isEqualTo: user!.uid)
+       .get()
+       .then((doc) {
+     if (doc.docs[0].exists) {
+       if(doc.docs[0].data()['role']=="Admin"){
+
+         Navigator.pushReplacement(
+           context,
+           MaterialPageRoute(
+             builder: (context) =>  HomeScreen(),
+           ),
+         );
+        }} else {
+       ScaffoldMessenger.of(context).showSnackBar(SnackBar(backgroundColor:Colors.red,content:Container(child:Text('Document does not exist on the database'),)));
+       print('Document does not exist on the database');
+     }
+   });
+ }
+ void signIn(String email, String password) async {
+   if (_formkey.currentState!.validate()) {
+     try {
+       UserCredential userCredential =
+       await FirebaseAuth.instance.signInWithEmailAndPassword(
+         email: email,
+         password: password,
+
+       );
+       route();
+     } on FirebaseAuthException catch (e) {
+       if (e.code == 'user-not-found') {
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+             backgroundColor: Colors.red,
+             content: Container(
+               child: Text('No user found for that email.'),)));
+         print('No user found for that email.');
+       } else if (e.code == 'wrong-password') {
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+             backgroundColor: Colors.red,
+             content: Container(
+               child: Text('Wrong password provided for that user.'),)));
+         print('Wrong password provided for that user.');
+       }
+     }
+   }
+ }
 }

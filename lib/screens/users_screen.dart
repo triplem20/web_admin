@@ -73,7 +73,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
             child:
             StreamBuilder<QuerySnapshot>(
-                stream: _services.users.snapshots(),
+                stream: _services.users.where('role',isEqualTo: "user").snapshots(),
                 builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
     if (!snapshot.hasData) {
     return Text("No Data");
