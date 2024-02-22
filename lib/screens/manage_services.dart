@@ -6,6 +6,8 @@ import 'package:web_admin/services/firebase_services.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart'as firebase_storage;
 import 'package:file_picker/file_picker.dart';
+import 'package:uid/uid.dart';
+
 
 class ServiceScreen extends StatefulWidget {
   static const String id ="Service-screen";
@@ -43,6 +45,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
   saveServiceTofirebase()async {
     _services.SaveCategory(
       data: {
+        'id': UId.getId(),
         'category': dropdownValue,
         'title': _sername.text,
         'Description': _info.text,
@@ -221,7 +224,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
 
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

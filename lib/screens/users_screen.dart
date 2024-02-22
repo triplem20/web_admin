@@ -23,6 +23,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   QuerySnapshot? querySnapshot;
   QuerySnapshot? querySnapshot2;
+  QuerySnapshot? querySnapshot3;
 
 
 
@@ -107,12 +108,50 @@ class _UsersScreenState extends State<UsersScreen> {
     });
   }
 
+  Widget _dropDownButton3() {
+    return DropdownButton<String>(
+      style: TextStyle(fontSize: 15),
+
+      elevation: 8,
+      value: dropdownValue3,
+      icon: const Icon(Icons.arrow_downward),
+      hint: Text('Select Email'),
+      onChanged: (String? newValue3) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue3 = newValue3!;
+          stream = _services.users
+              .where('role',isEqualTo: "user")
+              .where('email',isEqualTo: dropdownValue3).snapshots();
+
+
+
+        });
+      },
+      items: querySnapshot2!.docs.map((e) {
+        return DropdownMenuItem<String>(
+          value: e['email'],
+          child: Text(e["email"]),
+        );
+      }).toList(),
+
+    );
+  }
+  getemailList(){
+    return _services.users.get().then((QuerySnapshot qs3) {
+      setState(() {
+        querySnapshot3 = qs3;
+      });
+    });
+  }
+
 
 
   @override
   void initState() {
     getUsersList();
     getaddressList();
+    getemailList();
 
 
 
@@ -146,6 +185,11 @@ class _UsersScreenState extends State<UsersScreen> {
                     SizedBox(width: 3),
                     Container(
                         child: querySnapshot2 == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton2()),
+                    SizedBox(width: 10),
+                    Text("Email : ",style: TextStyle(color: Colors.green),),
+                    SizedBox(width: 3),
+                    Container(
+                        child: querySnapshot3 == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton3()),
                     SizedBox(width: 10),
                     ]),
   ]),

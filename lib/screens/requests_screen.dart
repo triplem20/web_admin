@@ -109,7 +109,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                 ),
 
                 Container(
-                  width: 200,
+                  width: 250,
                   child: Text('              '),
                 ),
               ],
@@ -124,7 +124,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
             StreamBuilder<QuerySnapshot>(
                 stream: stream ??
                     FirebaseFirestore.instance
-                        .collection("Requests")
+                        .collection("Requests").where('status', isNotEqualTo: 'Canceled')
                         .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -198,7 +198,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
 
                                     Container(
-                                      width: 200,
+                                      width: 250,
                                       child:
                                       snapshot.data!.docs[index]['status'] ==
                                           'Accepted' ?

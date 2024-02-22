@@ -16,8 +16,8 @@ class DashScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
-            height: 110,
-            width: 120,
+            height: 115,
+            width: 105,
             decoration: BoxDecoration(
               color: color,
 
@@ -144,7 +144,7 @@ class DashScreen extends StatelessWidget {
               ),
             ],
     ),
-            SizedBox(height:35),
+            SizedBox(height:5),
             Row(
               children: [
                 SizedBox(width:10),
@@ -185,31 +185,55 @@ class DashScreen extends StatelessWidget {
                     return SizedBox();
                   },
                 ),
-                SizedBox(width:10),
-                StreamBuilder<QuerySnapshot>(
-                  stream: _services.Requests.where('status',isEqualTo: 'Accepted').snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
+]
+            ),
+                Row(
+                  children: [
+                    SizedBox(width:10),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: _services.Requests.where('status',isEqualTo: 'Canceled').snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Something went wrong');
+                        }
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(color: Colors.greenAccent),
-                      );
-                    }
-                    if(snapshot.hasData){
-                      return analatyicalWidget(title: "Accepted Requests", value: snapshot.data!.size.toString(),color: Colors.greenAccent);
-                    }
-                    return SizedBox();
-                  },
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(color: Colors.blueGrey),
+                          );
+                        }
+                        if(snapshot.hasData){
+                          return analatyicalWidget(title: "Canceled Requests", value: snapshot.data!.size.toString(),color: Colors.blueGrey);
+                        }
+                        return SizedBox();
+                      },
+                    ),
+                    SizedBox(width:10),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: _services.Requests.where('status',isEqualTo: 'Accepted').snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Something went wrong');
+                        }
+
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(color: Colors.greenAccent),
+                          );
+                        }
+                        if(snapshot.hasData){
+                          return analatyicalWidget(title: "Accepted Requests", value: snapshot.data!.size.toString(),color: Colors.greenAccent);
+                        }
+                        return SizedBox();
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
 
 
-    ]
-    ),
+
       );
   }
 }

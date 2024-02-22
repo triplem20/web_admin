@@ -36,6 +36,7 @@ class _ReportScreenState extends State<ReportScreen> {
     "All Requests",
     "Accepted Requests",
     "Rejected Requests",
+    "Canceled Requests",
     "Newest To Oldest",
     "Oldest To Newest",
   ];
@@ -152,12 +153,12 @@ class _ReportScreenState extends State<ReportScreen> {
       elevation: 8,
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
-      hint: Text('Select Username'),
+      hint: Text('Select Email'),
       onChanged: (String? newValue) {
         // This is called when the user selects an item.
         setState(() {
           dropdownValue = newValue!;
-          stream = _services.Requests.where('userName', isEqualTo: dropdownValue)
+          stream = _services.Requests.where('email', isEqualTo: dropdownValue)
               .snapshots();
 
 
@@ -165,15 +166,15 @@ class _ReportScreenState extends State<ReportScreen> {
       },
       items: querySnapshot!.docs.map((e) {
         return DropdownMenuItem<String>(
-          value: e['userName'],
-          child: Text(e["userName"]),
+          value: e['email'],
+          child: Text(e["email"]),
         );
       }).toList(),
 
     );
   }
   getUsersList(){
-    return _services.Requests.get().then((QuerySnapshot qs) {
+    return _services.users.get().then((QuerySnapshot qs) {
       setState(() {
         querySnapshot = qs;
       });
@@ -214,46 +215,12 @@ class _ReportScreenState extends State<ReportScreen> {
       });
     });
   }
-  Widget _dropDownButton3() {
-    return DropdownButton<String>(
-      style: TextStyle(fontSize: 15),
-
-      elevation: 8,
-      value: dropdownValue3,
-      icon: const Icon(Icons.arrow_downward),
-      hint: Text('Select Category'),
-      onChanged: (String? newValue3) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue3 = newValue3!;
-          stream = _services.Requests.where('category', isEqualTo: dropdownValue3)
-              .snapshots();
-
-
-        });
-      },
-      items: querySnapshot3!.docs.map((e) {
-        return DropdownMenuItem<String>(
-          value: e['name'],
-          child: Text(e["name"]),
-        );
-      }).toList(),
-
-    );
-  }
-  getCategoryList(){
-    return _services.category.get().then((QuerySnapshot qs3) {
-      setState(() {
-        querySnapshot3 = qs3;
-      });
-    });
-  }
 
   @override
   void initState() {
     getUsersList();
     getServicesList();
-    getCategoryList();
+
     dateController.text="";
     dateController2.text="";
 
@@ -285,7 +252,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 Text("Sort By : ",style: TextStyle(fontSize: 20,color:Colors.green),),
                 Row(
                   children: [
-                    Text("Other : ",style: TextStyle(color: Colors.green),),
+                    Text("Other :",style: TextStyle(color: Colors.green),),
                     SizedBox(width: 3),
                     Container(
                       child: ChipsChoice.single(
@@ -309,10 +276,15 @@ class _ReportScreenState extends State<ReportScreen> {
                                   .snapshots();
                             }
                             if (val == 3) {
-                              stream = _services.Requests.orderBy('id',descending: true)
+                              stream = _services.Requests.where('status',
+                                  isEqualTo: 'Canceled')
                                   .snapshots();
                             }
                             if (val == 4) {
+                              stream = _services.Requests.orderBy('id',descending: true)
+                                  .snapshots();
+                            }
+                            if (val == 5) {
                               stream = _services.Requests.orderBy('id',descending: false)
                                   .snapshots();
                             }
@@ -342,7 +314,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 SizedBox(height: 3),
                 Row(
                   children: [
-                    Text("UserName : ",style: TextStyle(color: Colors.green),),
+                    Text("User Email : ",style: TextStyle(color: Colors.green),),
                     SizedBox(width: 3),
                     Container(
                         child: querySnapshot == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton1()),
@@ -352,10 +324,6 @@ class _ReportScreenState extends State<ReportScreen> {
                     Container(
                         child: querySnapshot2 == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton2()),
                     SizedBox(width: 10),
-                    Text("Category : ",style: TextStyle(color: Colors.green),),
-                    SizedBox(width: 3),
-                    Container(
-                        child: querySnapshot3 == null ? CircularProgressIndicator(color: Colors.greenAccent) :_dropDownButton3()),
 
                   ],
                 ),
@@ -396,7 +364,14 @@ class _ReportScreenState extends State<ReportScreen> {
                 Container(
                   width: 120,
                   child: Text(
-                    'UserName',
+                    'User Email',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Container(
+                  width: 120,
+                  child: Text(
+                    'UserID',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -461,12 +436,17 @@ class _ReportScreenState extends State<ReportScreen> {
                                 ),
                                 Container(
                                   width: 100,
-                                  child: Text(data.docs[index]['productid']),
+                                  child: Text(data.docs[index]['serviceid']),
                                 ),
                                 Container(
                                   width: 100,
                                   child: Text(
-                                      snapshot.data!.docs[index]['userName']),
+                                      snapshot.data!.docs[index]['email']),
+                                ),
+                                Container(
+                                  width: 100,
+                                  child: Text(
+                                      snapshot.data!.docs[index]['uid']),
                                 ),
                                 Container(
                                   width: 100,
@@ -481,7 +461,11 @@ class _ReportScreenState extends State<ReportScreen> {
                                             : data.docs[index]['status'] ==
                                                     "Rejected"
                                                 ? Colors.blue
-                                                : Colors.grey,
+                                                :
+                                    data.docs[index]['status'] ==
+                                        "Canceled"
+                                      ? Colors.grey
+                                    :Colors.orangeAccent,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   width: 100,
