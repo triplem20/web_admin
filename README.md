@@ -16,14 +16,17 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 # output
-<img width="952" alt="Screenshot 2024-08-07 201452" src="https://github.com/user-attachments/assets/b131b815-3d25-4b9c-8e7e-84204cd127d1">
-<img width="959" alt="Screenshot 2024-08-07 201428" src="https://github.com/user-attachments/assets/cc2df655-3b06-48da-aeeb-b0d392d6be4a">
-<img width="959" alt="Screenshot 2024-08-07 201401" src="https://github.com/user-attachments/assets/0c9dfe64-28dc-479b-acf0-1b0506a54d13">
-<img width="955" alt="Screenshot 2024-08-07 201330" src="https://github.com/user-attachments/assets/3599a5e5-4a32-47e4-9564-02367fd1a668">
-<img width="958" alt="Screenshot 2024-08-18 222145" src="https://github.com/user-attachments/assets/153510b2-7903-4361-bb3d-233de9e9b12e">
+
+
+<img width="960" alt="Screenshot 2024-08-18 224422" src="https://github.com/user-attachments/assets/7d3e62f1-53b7-4ab6-8264-027527f556dd">
+<img width="958" alt="Screenshot 2024-08-18 224343" src="https://github.com/user-attachments/assets/74066900-6d90-4d82-9f51-d57563900634">
+<img width="959" alt="Screenshot 2024-08-18 224313" src="https://github.com/user-attachments/assets/e77ade4b-2059-4adb-b418-3d3c89cf798c">
+<img width="960" alt="Screenshot 2024-08-18 224247" src="https://github.com/user-attachments/assets/1ba68836-48f1-4112-b068-b4332a89cd29">
+<img width="960" alt="Screenshot 2024-08-18 224155" src="https://github.com/user-attachments/assets/160ad25e-c6ff-421f-b7ce-5ab0d2c021a4">
+<img width="960" alt="Screenshot 2024-08-18 224445" src="https://github.com/user-attachments/assets/38139e06-bf15-4046-9dad-54bb90655c80">
 <img width="959" alt="Screenshot 2024-08-07 201233" src="https://github.com/user-attachments/assets/74cdb273-d2c5-4479-a88e-969b774d95fc">
-<img width="957" alt="Screenshot 2024-08-07 201156" src="https://github.com/user-attachments/assets/4cb86b81-904f-4f57-966f-eeec1053d441">
-<img width="960" alt="Screenshot 202
-4-08-07 201303" src="https://github.com/user-attachments/assets/a3632204-885c-42e5-9f6c-867459d97a88">
+
+
+
 
 
