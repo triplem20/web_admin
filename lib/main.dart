@@ -18,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-        apiKey: "AIzaSyCATErbyQc5qNmUcIfmIwnBHa-6MjRTdCI",
+        apiKey: "APIKey",
         authDomain: "flutter-topcare.firebaseapp.com",
         projectId: "flutter-topcare",
         storageBucket: "flutter-topcare.appspot.com",
