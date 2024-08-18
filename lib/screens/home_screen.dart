@@ -123,7 +123,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: const Text('Top Care'),
+        title: Row(
+          children: [
+           Hero(
+             tag: 'logo',
+             child: Container(
+               height: 50,
+               width: 50,
+               decoration:BoxDecoration(
+               image: DecorationImage(image: AssetImage('assets/images/logo1.jpg')),
+               borderRadius: BorderRadius.circular(20),
+
+             ),),
+           ),
+            const Text('Top Care'),
+          ],
+        ),
         actions: [
           IconButton(onPressed: (){
             _showAlertDialog(context,

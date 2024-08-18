@@ -96,7 +96,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
   @override
   void initState() {
     getCategoryList();
-    // TODO: implement initState
+
     super.initState();
   }
 

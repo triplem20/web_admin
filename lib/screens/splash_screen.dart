@@ -24,15 +24,18 @@ class _SplashScreenState extends State<SplashScreen>{
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child:  Container(
-      height: 200,
-      width: 200,
-      decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage('assets/images/logo1.jpg')),
-        borderRadius: BorderRadius.circular(20),
+        child:  Hero(
+          tag: 'logo',
+          child: Container(
+                height: 200,
+                width: 200,
+                decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage('assets/images/logo1.jpg')),
+          borderRadius: BorderRadius.circular(20),
 
-      ),
-    ),
+                ),
+              ),
+        ),
       ),
     );
   }
